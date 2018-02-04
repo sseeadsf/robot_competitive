@@ -279,7 +279,8 @@ delay_us(10);
 RX_Mode();
 
 
-while (1){     
+while (1){   
+    RX_Config();  
     if(IRQ == 0){
         RX_Read();           
         if(score == 9)

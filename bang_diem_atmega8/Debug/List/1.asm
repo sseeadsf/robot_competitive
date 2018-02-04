@@ -2361,78 +2361,80 @@ _main:
 ; 0000 0119 
 ; 0000 011A while (1){
 _0x136:
-; 0000 011B     if(IRQ == 0){
+; 0000 011B     RX_Config();
+	RCALL _RX_Config
+; 0000 011C     if(IRQ == 0){
 	SBIC 0x13,3
 	RJMP _0x139
-; 0000 011C         RX_Read();
+; 0000 011D         RX_Read();
 	RCALL _RX_Read
-; 0000 011D         if(score == 9)
+; 0000 011E         if(score == 9)
 	LDI  R30,LOW(9)
 	LDI  R31,HIGH(9)
 	RCALL SUBOPT_0x9
 	BRNE _0x13A
-; 0000 011E             resetGame();
+; 0000 011F             resetGame();
 	RCALL _resetGame
-; 0000 011F         else if(score == 10){
+; 0000 0120         else if(score == 10){
 	RJMP _0x13B
 _0x13A:
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	RCALL SUBOPT_0x9
 	BRNE _0x13C
-; 0000 0120             startGame();
+; 0000 0121             startGame();
 	RCALL _startGame
-; 0000 0121             RX_Config();
+; 0000 0122             RX_Config();
 	RCALL _RX_Config
-; 0000 0122         }
-; 0000 0123         if(!timeOut){
+; 0000 0123         }
+; 0000 0124         if(!timeOut){
 _0x13C:
 _0x13B:
 	LDS  R30,_timeOut
 	CPI  R30,0
 	BRNE _0x13D
-; 0000 0124             getScore();
+; 0000 0125             getScore();
 	RCALL _getScore
-; 0000 0125             delay_ms(500);
+; 0000 0126             delay_ms(500);
 	LDI  R26,LOW(500)
 	LDI  R27,HIGH(500)
 	RCALL _delay_ms
-; 0000 0126         }
-; 0000 0127 
-; 0000 0128         if(checkFinish(redScore)){
+; 0000 0127         }
+; 0000 0128 
+; 0000 0129         if(checkFinish(redScore)){
 _0x13D:
 	MOV  R26,R13
 	RCALL _checkFinish
 	CPI  R30,0
 	BREQ _0x13E
-; 0000 0129             TIMSK = (0<<TOIE2) | (1<<TOIE0);
+; 0000 012A             TIMSK = (0<<TOIE2) | (1<<TOIE0);
 	RCALL SUBOPT_0x1E
-; 0000 012A             redScores = 999;
+; 0000 012B             redScores = 999;
 	RCALL SUBOPT_0xD
-; 0000 012B             stopGame();
+; 0000 012C             stopGame();
 	RCALL _stopGame
-; 0000 012C         }
-; 0000 012D         if(checkFinish(blueScore)){
+; 0000 012D         }
+; 0000 012E         if(checkFinish(blueScore)){
 _0x13E:
 	MOV  R26,R12
 	RCALL _checkFinish
 	CPI  R30,0
 	BREQ _0x13F
-; 0000 012E             TIMSK = (0<<TOIE2) | (1<<TOIE0);
+; 0000 012F             TIMSK = (0<<TOIE2) | (1<<TOIE0);
 	RCALL SUBOPT_0x1E
-; 0000 012F             blueScores = 999;
+; 0000 0130             blueScores = 999;
 	RCALL SUBOPT_0xB
-; 0000 0130             stopGame();
+; 0000 0131             stopGame();
 	RCALL _stopGame
-; 0000 0131         }
-; 0000 0132     }
+; 0000 0132         }
+; 0000 0133     }
 _0x13F:
-; 0000 0133     RX_Config();
+; 0000 0134     RX_Config();
 _0x139:
 	RCALL _RX_Config
-; 0000 0134 }
-	RJMP _0x136
 ; 0000 0135 }
+	RJMP _0x136
+; 0000 0136 }
 _0x140:
 	RJMP _0x140
 ; .FEND

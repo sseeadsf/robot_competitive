@@ -291,7 +291,6 @@ while (1){
         if(!timeOut){  
             getScore();
             delay_ms(500);
-            clear();
         }
                            
         if(checkFinish(redScore)){ 

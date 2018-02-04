@@ -45,4 +45,4 @@ startGame                                                                       
 resetGame                                                                         0x00148      5
 timer0_ovf_isr                                                                    0x0014D    173
 timer2_interrupt                                                                  0x001FA     56
-main                                                                              0x00232     73
+main                                                                              0x00232     74
