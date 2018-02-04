@@ -3,9 +3,9 @@ Variable                                                                        
 ------------------------------------------------------------------------------------------------
 number                                                                            0x0160      10
 numberA                                                                           0x016A      10
-redScores                                                                         0x0174       2
-blueScores                                                                        0x0176       2
-timeOut                                                                           0x0178       1
+red_scores                                                                        0x0174       2
+blue_scores                                                                       0x0176       2
+time_out                                                                          0x0178       1
 a                                                                                 0x0179       2
 
 EEPROM Allocation [bytes]
@@ -22,8 +22,8 @@ score                                                                           
 milisecond                                                                        R6           1
 second                                                                            R11          1
 led                                                                               R10          1
-redScore                                                                          R13          1
-blueScore                                                                         R12          1
+red_score                                                                         R13          1
+blue_score                                                                        R12          1
 
 FLASH Allocation [words]
 Function                                                                          Address   Size
@@ -38,11 +38,11 @@ Common_Init                                                                     
 RX_Mode                                                                           0x000CF      3
 RX_Config                                                                         0x000D2      6
 RX_Read                                                                           0x000D8     15
-checkFinish                                                                       0x000E7      9
-getScore                                                                          0x000F0     77
-stopGame                                                                          0x0013D      5
-startGame                                                                         0x00142      6
-resetGame                                                                         0x00148      5
+check_finish                                                                      0x000E7      9
+get_score                                                                         0x000F0     77
+stop_game                                                                         0x0013D      5
+start_game                                                                        0x00142      6
+reset_game                                                                        0x00148      5
 timer0_ovf_isr                                                                    0x0014D    173
 timer2_interrupt                                                                  0x001FA     56
-main                                                                              0x00232     74
+main                                                                              0x00232     73

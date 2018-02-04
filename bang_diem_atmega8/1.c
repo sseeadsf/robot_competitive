@@ -30,72 +30,72 @@ unsigned char number[10] = {0xFE, 0xF0, 0xED, 0xF9, 0xF3, 0xDB, 0xDF, 0xF0, 0xFF
 unsigned char numberA[10] = {1, 0, 1, 1, 0, 1, 1, 1, 1, 1};  
 unsigned char milisecond = 100, second = 180;
 unsigned char led = 1;
-unsigned char redScore = 0b0000;
-unsigned char blueScore = 0b0000;
-int redScores = 0, blueScores = 0;
-bool timeOut = true;
+unsigned char red_score = 0b0000;
+unsigned char blue_score = 0b0000;
+int red_scores = 0, blue_scores = 0;
+bool time_out = true;
 int a;
 
-bool checkFinish(unsigned char input){
+bool check_finish(unsigned char input){
     if(input == 0b1111)
         return true;
     else 
         return false;   
 }
 
-void getScore(){
+void get_score(){
     if(score == 1){
-        blueScores += 2;
-        blueScore |= 0b0001;
+        blue_scores += 2;
+        blue_score |= 0b0001;
     }
     else if(score == 2){
-        blueScores += 3;
-        blueScore |= 0b0010;
+        blue_scores += 3;
+        blue_score |= 0b0010;
     }                     
     else if(score == 3){
-        blueScores += 5;
-        blueScore |= 0b0100;
+        blue_scores += 5;
+        blue_score |= 0b0100;
     }                     
     else if(score == 4){
-        blueScores += 10;
-        blueScore |= 0b1000;
+        blue_scores += 10;
+        blue_score |= 0b1000;
     }                     
     else if(score == 5){
-        redScores += 2;
-        redScore |= 0b0001;
+        red_scores += 2;
+        red_score |= 0b0001;
     }                    
     else if(score == 6){
-        redScores += 3;
-        redScore |= 0b0010;
+        red_scores += 3;
+        red_score |= 0b0010;
     }                       
     else if(score == 7){
-        redScores += 5;
-        redScore |= 0b0100;
+        red_scores += 5;
+        red_score |= 0b0100;
     }                       
     else if(score == 8){
-        redScores += 10;
-        redScore |= 0b1000;
+        red_scores += 10;
+        red_score |= 0b1000;
     }                        
 }
 
-void stopGame(){
-    timeOut = true;
+void stop_game(){
+    time_out = true;
     TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (1<<TOIE1) | (1<<TOIE0);    
 }
 
-void startGame(){
-    timeOut = false;
+void start_game(){
+    time_out = false;
     TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (1<<TOIE1) | (1<<TOIE0);    
 }
 
-void resetGame(){
+void reset_game(){
     WDTCR=0x18;
     WDTCR=0x08;   
     while(1);    
 }
 
 interrupt [TIM0_OVF] void timer0_ovf_isr(void){
-    TCNT0=0x45;  
+    TCNT0=0x06;  
     if(led == 1){
         LED_SEG = number[second/100];
         LED_A = numberA[second/100];
@@ -140,8 +140,8 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void){
     }                                
     
     else if(led == 4){
-        LED_SEG = number[redScores/100];
-        LED_A = numberA[redScores/100];
+        LED_SEG = number[red_scores/100];
+        LED_A = numberA[red_scores/100];
         LED_TIME1 =         1;
         LED_TIME2 =         1;
         LED_TIME3 =         1;
@@ -154,8 +154,8 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void){
     }
     
     else if(led == 5){
-        LED_SEG = number[(redScores%100)/10]; 
-        LED_A = numberA[(redScores%100)/10];
+        LED_SEG = number[(red_scores%100)/10]; 
+        LED_A = numberA[(red_scores%100)/10];
         LED_TIME1 =         1;
         LED_TIME2 =         1;
         LED_TIME3 =         1;
@@ -168,8 +168,8 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void){
     }
     
     else if(led == 6){
-        LED_SEG = number[redScores%10];
-        LED_A = numberA[redScores%10];
+        LED_SEG = number[red_scores%10];
+        LED_A = numberA[red_scores%10];
         LED_TIME1 =         1;
         LED_TIME2 =         1;
         LED_TIME3 =         1;
@@ -182,8 +182,8 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void){
     }
     
     else if(led == 7){
-        LED_SEG = number[blueScores/100]; 
-        LED_A = numberA[blueScores/100];
+        LED_SEG = number[blue_scores/100]; 
+        LED_A = numberA[blue_scores/100];
         LED_TIME1 =         1;
         LED_TIME2 =         1;
         LED_TIME3 =         1;
@@ -196,8 +196,8 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void){
     }
     
     else if(led == 8){
-        LED_SEG = number[(blueScores%100)/10];
-        LED_A = numberA[(blueScores%100)/10];
+        LED_SEG = number[(blue_scores%100)/10];
+        LED_A = numberA[(blue_scores%100)/10];
         LED_TIME1 =         1;
         LED_TIME2 =         1;
         LED_TIME3 =         1;
@@ -210,8 +210,8 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void){
     }  
     
     else if(led == 9){
-        LED_SEG = number[blueScores%10];
-        LED_A = numberA[blueScores%10];
+        LED_SEG = number[blue_scores%10];
+        LED_A = numberA[blue_scores%10];
         LED_TIME1 =         1;
         LED_TIME2 =         1;
         LED_TIME3 =         1;
@@ -239,7 +239,7 @@ interrupt [TIM2_OVF] void timer2_interrupt(){
         milisecond = 100;         
     }
     if(second == 0){
-        stopGame();
+        stop_game();
     }  
 }
 
@@ -254,9 +254,9 @@ PORTD= 0xFF;
 DDRC = 0x27;
 PORTC = 0x00;
 
-//2.912ms
+
 TCCR0=(0<<CS02) | (1<<CS01) | (1<<CS00);
-TCNT0=0x45;
+TCNT0=0x06;
 
 
 //10ms
@@ -279,32 +279,31 @@ delay_us(10);
 RX_Mode();
 
 
-while (1){   
-    RX_Config();  
+while (1){    
     if(IRQ == 0){
         RX_Read();           
         if(score == 9)
-            resetGame();
+            reset_game();
         else if(score == 10){
-            startGame();
+            start_game();
             RX_Config();    
         }
-        if(!timeOut){  
-            getScore();
+        if(!time_out){  
+            get_score();
             delay_ms(500);
         }
                            
-        if(checkFinish(redScore)){ 
+        if(check_finish(red_score)){ 
             TIMSK = (0<<TOIE2) | (1<<TOIE0);
-            redScores = 999;
-            stopGame();
+            red_scores = 999;
+            stop_game();
         }           
-        if(checkFinish(blueScore)){  
+        if(check_finish(blue_score)){  
             TIMSK = (0<<TOIE2) | (1<<TOIE0);
-            blueScores = 999;
-            stopGame();
+            blue_scores = 999;
+            stop_game();
         }
-    }   
-    RX_Config();    
-}  
+        RX_Config();
+    }      
+}
 }

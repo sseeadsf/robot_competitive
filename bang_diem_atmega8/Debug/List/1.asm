@@ -1091,8 +1091,8 @@ __DELAY_USW_LOOP:
 	.DEF _milisecond=R6
 	.DEF _second=R11
 	.DEF _led=R10
-	.DEF _redScore=R13
-	.DEF _blueScore=R12
+	.DEF _red_score=R13
+	.DEF _blue_score=R12
 
 	.CSEG
 	.ORG 0x00
@@ -1150,7 +1150,7 @@ __GLOBAL_INI_TBL:
 	.DW  _0x58*2
 
 	.DW  0x01
-	.DW  _timeOut
+	.DW  _time_out
 	.DW  _0x59*2
 
 _0xFFFFFFFF:
@@ -1663,18 +1663,18 @@ _RX_Read:
 ;unsigned char numberA[10] = {1, 0, 1, 1, 0, 1, 1, 1, 1, 1};
 ;unsigned char milisecond = 100, second = 180;
 ;unsigned char led = 1;
-;unsigned char redScore = 0b0000;
-;unsigned char blueScore = 0b0000;
-;int redScores = 0, blueScores = 0;
-;bool timeOut = true;
+;unsigned char red_score = 0b0000;
+;unsigned char blue_score = 0b0000;
+;int red_scores = 0, blue_scores = 0;
+;bool time_out = true;
 ;int a;
 ;
-;bool checkFinish(unsigned char input){
-; 0000 0027 _Bool checkFinish(unsigned char input){
+;bool check_finish(unsigned char input){
+; 0000 0027 _Bool check_finish(unsigned char input){
 
 	.CSEG
-_checkFinish:
-; .FSTART _checkFinish
+_check_finish:
+; .FSTART _check_finish
 ; 0000 0028     if(input == 0b1111)
 	ST   -Y,R26
 ;	input -> Y+0
@@ -1694,20 +1694,20 @@ _0x2020002:
 	RET
 ; .FEND
 ;
-;void getScore(){
-; 0000 002E void getScore(){
-_getScore:
-; .FSTART _getScore
+;void get_score(){
+; 0000 002E void get_score(){
+_get_score:
+; .FSTART _get_score
 ; 0000 002F     if(score == 1){
 	LDI  R30,LOW(1)
 	LDI  R31,HIGH(1)
 	RCALL SUBOPT_0x9
 	BRNE _0x5C
-; 0000 0030         blueScores += 2;
+; 0000 0030         blue_scores += 2;
 	RCALL SUBOPT_0xA
 	ADIW R30,2
 	RCALL SUBOPT_0xB
-; 0000 0031         blueScore |= 0b0001;
+; 0000 0031         blue_score |= 0b0001;
 	LDI  R30,LOW(1)
 	OR   R12,R30
 ; 0000 0032     }
@@ -1718,11 +1718,11 @@ _0x5C:
 	LDI  R31,HIGH(2)
 	RCALL SUBOPT_0x9
 	BRNE _0x5E
-; 0000 0034         blueScores += 3;
+; 0000 0034         blue_scores += 3;
 	RCALL SUBOPT_0xA
 	ADIW R30,3
 	RCALL SUBOPT_0xB
-; 0000 0035         blueScore |= 0b0010;
+; 0000 0035         blue_score |= 0b0010;
 	LDI  R30,LOW(2)
 	OR   R12,R30
 ; 0000 0036     }
@@ -1733,11 +1733,11 @@ _0x5E:
 	LDI  R31,HIGH(3)
 	RCALL SUBOPT_0x9
 	BRNE _0x60
-; 0000 0038         blueScores += 5;
+; 0000 0038         blue_scores += 5;
 	RCALL SUBOPT_0xA
 	ADIW R30,5
 	RCALL SUBOPT_0xB
-; 0000 0039         blueScore |= 0b0100;
+; 0000 0039         blue_score |= 0b0100;
 	LDI  R30,LOW(4)
 	OR   R12,R30
 ; 0000 003A     }
@@ -1748,11 +1748,11 @@ _0x60:
 	LDI  R31,HIGH(4)
 	RCALL SUBOPT_0x9
 	BRNE _0x62
-; 0000 003C         blueScores += 10;
+; 0000 003C         blue_scores += 10;
 	RCALL SUBOPT_0xA
 	ADIW R30,10
 	RCALL SUBOPT_0xB
-; 0000 003D         blueScore |= 0b1000;
+; 0000 003D         blue_score |= 0b1000;
 	LDI  R30,LOW(8)
 	OR   R12,R30
 ; 0000 003E     }
@@ -1763,11 +1763,11 @@ _0x62:
 	LDI  R31,HIGH(5)
 	RCALL SUBOPT_0x9
 	BRNE _0x64
-; 0000 0040         redScores += 2;
+; 0000 0040         red_scores += 2;
 	RCALL SUBOPT_0xC
 	ADIW R30,2
 	RCALL SUBOPT_0xD
-; 0000 0041         redScore |= 0b0001;
+; 0000 0041         red_score |= 0b0001;
 	LDI  R30,LOW(1)
 	RJMP _0x141
 ; 0000 0042     }
@@ -1777,11 +1777,11 @@ _0x64:
 	LDI  R31,HIGH(6)
 	RCALL SUBOPT_0x9
 	BRNE _0x66
-; 0000 0044         redScores += 3;
+; 0000 0044         red_scores += 3;
 	RCALL SUBOPT_0xC
 	ADIW R30,3
 	RCALL SUBOPT_0xD
-; 0000 0045         redScore |= 0b0010;
+; 0000 0045         red_score |= 0b0010;
 	LDI  R30,LOW(2)
 	RJMP _0x141
 ; 0000 0046     }
@@ -1791,11 +1791,11 @@ _0x66:
 	LDI  R31,HIGH(7)
 	RCALL SUBOPT_0x9
 	BRNE _0x68
-; 0000 0048         redScores += 5;
+; 0000 0048         red_scores += 5;
 	RCALL SUBOPT_0xC
 	ADIW R30,5
 	RCALL SUBOPT_0xD
-; 0000 0049         redScore |= 0b0100;
+; 0000 0049         red_score |= 0b0100;
 	LDI  R30,LOW(4)
 	RJMP _0x141
 ; 0000 004A     }
@@ -1805,11 +1805,11 @@ _0x68:
 	LDI  R31,HIGH(8)
 	RCALL SUBOPT_0x9
 	BRNE _0x6A
-; 0000 004C         redScores += 10;
+; 0000 004C         red_scores += 10;
 	RCALL SUBOPT_0xC
 	ADIW R30,10
 	RCALL SUBOPT_0xD
-; 0000 004D         redScore |= 0b1000;
+; 0000 004D         red_score |= 0b1000;
 	LDI  R30,LOW(8)
 _0x141:
 	OR   R13,R30
@@ -1823,26 +1823,26 @@ _0x5D:
 	RET
 ; .FEND
 ;
-;void stopGame(){
-; 0000 0051 void stopGame(){
-_stopGame:
-; .FSTART _stopGame
-; 0000 0052     timeOut = true;
+;void stop_game(){
+; 0000 0051 void stop_game(){
+_stop_game:
+; .FSTART _stop_game
+; 0000 0052     time_out = true;
 	LDI  R30,LOW(1)
-	STS  _timeOut,R30
+	STS  _time_out,R30
 ; 0000 0053     TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (1<<TOIE1) | (1<<TOIE0);
 	LDI  R30,LOW(5)
 	RJMP _0x2020001
 ; 0000 0054 }
 ; .FEND
 ;
-;void startGame(){
-; 0000 0056 void startGame(){
-_startGame:
-; .FSTART _startGame
-; 0000 0057     timeOut = false;
+;void start_game(){
+; 0000 0056 void start_game(){
+_start_game:
+; .FSTART _start_game
+; 0000 0057     time_out = false;
 	LDI  R30,LOW(0)
-	STS  _timeOut,R30
+	STS  _time_out,R30
 ; 0000 0058     TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (1<<TOIE1) | (1<<TOIE0);
 	LDI  R30,LOW(69)
 _0x2020001:
@@ -1851,10 +1851,10 @@ _0x2020001:
 	RET
 ; .FEND
 ;
-;void resetGame(){
-; 0000 005B void resetGame(){
-_resetGame:
-; .FSTART _resetGame
+;void reset_game(){
+; 0000 005B void reset_game(){
+_reset_game:
+; .FSTART _reset_game
 ; 0000 005C     WDTCR=0x18;
 	LDI  R30,LOW(24)
 	OUT  0x21,R30
@@ -1880,8 +1880,8 @@ _timer0_ovf_isr:
 	ST   -Y,R31
 	IN   R30,SREG
 	ST   -Y,R30
-; 0000 0062     TCNT0=0x45;
-	LDI  R30,LOW(69)
+; 0000 0062     TCNT0=0x06;
+	LDI  R30,LOW(6)
 	OUT  0x32,R30
 ; 0000 0063     if(led == 1){
 	LDI  R30,LOW(1)
@@ -1986,10 +1986,10 @@ _0x9A:
 	LDI  R30,LOW(4)
 	CP   R30,R10
 	BRNE _0xB0
-; 0000 008F         LED_SEG = number[redScores/100];
+; 0000 008F         LED_SEG = number[red_scores/100];
 	RCALL SUBOPT_0x15
 	RCALL SUBOPT_0xF
-; 0000 0090         LED_A = numberA[redScores/100];
+; 0000 0090         LED_A = numberA[red_scores/100];
 	RCALL SUBOPT_0x15
 	RCALL SUBOPT_0x10
 	BRNE _0xB1
@@ -2019,10 +2019,10 @@ _0xB0:
 	LDI  R30,LOW(5)
 	CP   R30,R10
 	BRNE _0xC6
-; 0000 009D         LED_SEG = number[(redScores%100)/10];
+; 0000 009D         LED_SEG = number[(red_scores%100)/10];
 	RCALL SUBOPT_0x19
 	RCALL SUBOPT_0xF
-; 0000 009E         LED_A = numberA[(redScores%100)/10];
+; 0000 009E         LED_A = numberA[(red_scores%100)/10];
 	RCALL SUBOPT_0x19
 	RCALL SUBOPT_0x10
 	BRNE _0xC7
@@ -2053,10 +2053,10 @@ _0xC6:
 	LDI  R30,LOW(6)
 	CP   R30,R10
 	BRNE _0xDC
-; 0000 00AB         LED_SEG = number[redScores%10];
+; 0000 00AB         LED_SEG = number[red_scores%10];
 	RCALL SUBOPT_0x1A
 	RCALL SUBOPT_0xF
-; 0000 00AC         LED_A = numberA[redScores%10];
+; 0000 00AC         LED_A = numberA[red_scores%10];
 	RCALL SUBOPT_0x1A
 	RCALL SUBOPT_0x10
 	BRNE _0xDD
@@ -2087,10 +2087,10 @@ _0xDC:
 	LDI  R30,LOW(7)
 	CP   R30,R10
 	BRNE _0xF2
-; 0000 00B9         LED_SEG = number[blueScores/100];
+; 0000 00B9         LED_SEG = number[blue_scores/100];
 	RCALL SUBOPT_0x1B
 	RCALL SUBOPT_0xF
-; 0000 00BA         LED_A = numberA[blueScores/100];
+; 0000 00BA         LED_A = numberA[blue_scores/100];
 	RCALL SUBOPT_0x1B
 	RCALL SUBOPT_0x10
 	BRNE _0xF3
@@ -2122,10 +2122,10 @@ _0xF2:
 	LDI  R30,LOW(8)
 	CP   R30,R10
 	BRNE _0x108
-; 0000 00C7         LED_SEG = number[(blueScores%100)/10];
+; 0000 00C7         LED_SEG = number[(blue_scores%100)/10];
 	RCALL SUBOPT_0x1C
 	RCALL SUBOPT_0xF
-; 0000 00C8         LED_A = numberA[(blueScores%100)/10];
+; 0000 00C8         LED_A = numberA[(blue_scores%100)/10];
 	RCALL SUBOPT_0x1C
 	RCALL SUBOPT_0x10
 	BRNE _0x109
@@ -2157,10 +2157,10 @@ _0x108:
 	LDI  R30,LOW(9)
 	CP   R30,R10
 	BRNE _0x11E
-; 0000 00D5         LED_SEG = number[blueScores%10];
+; 0000 00D5         LED_SEG = number[blue_scores%10];
 	RCALL SUBOPT_0x1D
 	RCALL SUBOPT_0xF
-; 0000 00D6         LED_A = numberA[blueScores%10];
+; 0000 00D6         LED_A = numberA[blue_scores%10];
 	RCALL SUBOPT_0x1D
 	RCALL SUBOPT_0x10
 	BRNE _0x11F
@@ -2266,8 +2266,8 @@ _0x133:
 _0x134:
 	TST  R11
 	BRNE _0x135
-; 0000 00F2         stopGame();
-	RCALL _stopGame
+; 0000 00F2         stop_game();
+	RCALL _stop_game
 ; 0000 00F3     }
 ; 0000 00F4 }
 _0x135:
@@ -2312,12 +2312,12 @@ _main:
 	LDI  R30,LOW(0)
 	OUT  0x15,R30
 ; 0000 0100 
-; 0000 0101 //2.912ms
+; 0000 0101 
 ; 0000 0102 TCCR0=(0<<CS02) | (1<<CS01) | (1<<CS00);
 	LDI  R30,LOW(3)
 	OUT  0x33,R30
-; 0000 0103 TCNT0=0x45;
-	LDI  R30,LOW(69)
+; 0000 0103 TCNT0=0x06;
+	LDI  R30,LOW(6)
 	OUT  0x32,R30
 ; 0000 0104 
 ; 0000 0105 
@@ -2361,80 +2361,78 @@ _main:
 ; 0000 0119 
 ; 0000 011A while (1){
 _0x136:
-; 0000 011B     RX_Config();
-	RCALL _RX_Config
-; 0000 011C     if(IRQ == 0){
+; 0000 011B     if(IRQ == 0){
 	SBIC 0x13,3
 	RJMP _0x139
-; 0000 011D         RX_Read();
+; 0000 011C         RX_Read();
 	RCALL _RX_Read
-; 0000 011E         if(score == 9)
+; 0000 011D         if(score == 9)
 	LDI  R30,LOW(9)
 	LDI  R31,HIGH(9)
 	RCALL SUBOPT_0x9
 	BRNE _0x13A
-; 0000 011F             resetGame();
-	RCALL _resetGame
-; 0000 0120         else if(score == 10){
+; 0000 011E             reset_game();
+	RCALL _reset_game
+; 0000 011F         else if(score == 10){
 	RJMP _0x13B
 _0x13A:
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	RCALL SUBOPT_0x9
 	BRNE _0x13C
-; 0000 0121             startGame();
-	RCALL _startGame
-; 0000 0122             RX_Config();
+; 0000 0120             start_game();
+	RCALL _start_game
+; 0000 0121             RX_Config();
 	RCALL _RX_Config
-; 0000 0123         }
-; 0000 0124         if(!timeOut){
+; 0000 0122         }
+; 0000 0123         if(!time_out){
 _0x13C:
 _0x13B:
-	LDS  R30,_timeOut
+	LDS  R30,_time_out
 	CPI  R30,0
 	BRNE _0x13D
-; 0000 0125             getScore();
-	RCALL _getScore
-; 0000 0126             delay_ms(500);
+; 0000 0124             get_score();
+	RCALL _get_score
+; 0000 0125             delay_ms(500);
 	LDI  R26,LOW(500)
 	LDI  R27,HIGH(500)
 	RCALL _delay_ms
-; 0000 0127         }
-; 0000 0128 
-; 0000 0129         if(checkFinish(redScore)){
+; 0000 0126         }
+; 0000 0127 
+; 0000 0128         if(check_finish(red_score)){
 _0x13D:
 	MOV  R26,R13
-	RCALL _checkFinish
+	RCALL _check_finish
 	CPI  R30,0
 	BREQ _0x13E
-; 0000 012A             TIMSK = (0<<TOIE2) | (1<<TOIE0);
+; 0000 0129             TIMSK = (0<<TOIE2) | (1<<TOIE0);
 	RCALL SUBOPT_0x1E
-; 0000 012B             redScores = 999;
+; 0000 012A             red_scores = 999;
 	RCALL SUBOPT_0xD
-; 0000 012C             stopGame();
-	RCALL _stopGame
-; 0000 012D         }
-; 0000 012E         if(checkFinish(blueScore)){
+; 0000 012B             stop_game();
+	RCALL _stop_game
+; 0000 012C         }
+; 0000 012D         if(check_finish(blue_score)){
 _0x13E:
 	MOV  R26,R12
-	RCALL _checkFinish
+	RCALL _check_finish
 	CPI  R30,0
 	BREQ _0x13F
-; 0000 012F             TIMSK = (0<<TOIE2) | (1<<TOIE0);
+; 0000 012E             TIMSK = (0<<TOIE2) | (1<<TOIE0);
 	RCALL SUBOPT_0x1E
-; 0000 0130             blueScores = 999;
+; 0000 012F             blue_scores = 999;
 	RCALL SUBOPT_0xB
-; 0000 0131             stopGame();
-	RCALL _stopGame
-; 0000 0132         }
-; 0000 0133     }
+; 0000 0130             stop_game();
+	RCALL _stop_game
+; 0000 0131         }
+; 0000 0132         RX_Config();
 _0x13F:
-; 0000 0134     RX_Config();
-_0x139:
 	RCALL _RX_Config
-; 0000 0135 }
+; 0000 0133     }
+; 0000 0134 }
+_0x139:
 	RJMP _0x136
-; 0000 0136 }
+; 0000 0135 }
 _0x140:
 	RJMP _0x140
 ; .FEND
@@ -2446,11 +2444,11 @@ _number:
 	.BYTE 0xA
 _numberA:
 	.BYTE 0xA
-_redScores:
+_red_scores:
 	.BYTE 0x2
-_blueScores:
+_blue_scores:
 	.BYTE 0x2
-_timeOut:
+_time_out:
 	.BYTE 0x1
 _a:
 	.BYTE 0x2
@@ -2520,26 +2518,26 @@ SUBOPT_0x9:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:7 WORDS
 SUBOPT_0xA:
-	LDS  R30,_blueScores
-	LDS  R31,_blueScores+1
+	LDS  R30,_blue_scores
+	LDS  R31,_blue_scores+1
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:10 WORDS
 SUBOPT_0xB:
-	STS  _blueScores,R30
-	STS  _blueScores+1,R31
+	STS  _blue_scores,R30
+	STS  _blue_scores+1,R31
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:7 WORDS
 SUBOPT_0xC:
-	LDS  R30,_redScores
-	LDS  R31,_redScores+1
+	LDS  R30,_red_scores
+	LDS  R31,_red_scores+1
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:10 WORDS
 SUBOPT_0xD:
-	STS  _redScores,R30
-	STS  _redScores+1,R31
+	STS  _red_scores,R30
+	STS  _red_scores+1,R31
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
@@ -2607,8 +2605,8 @@ SUBOPT_0x14:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
 SUBOPT_0x15:
-	LDS  R26,_redScores
-	LDS  R27,_redScores+1
+	LDS  R26,_red_scores
+	LDS  R27,_red_scores+1
 	LDI  R30,LOW(100)
 	LDI  R31,HIGH(100)
 	RCALL __DIVW21
@@ -2634,8 +2632,8 @@ SUBOPT_0x18:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:8 WORDS
 SUBOPT_0x19:
-	LDS  R26,_redScores
-	LDS  R27,_redScores+1
+	LDS  R26,_red_scores
+	LDS  R27,_red_scores+1
 	LDI  R30,LOW(100)
 	LDI  R31,HIGH(100)
 	RCALL __MODW21
@@ -2647,8 +2645,8 @@ SUBOPT_0x19:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
 SUBOPT_0x1A:
-	LDS  R26,_redScores
-	LDS  R27,_redScores+1
+	LDS  R26,_red_scores
+	LDS  R27,_red_scores+1
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	RCALL __MODW21
@@ -2656,8 +2654,8 @@ SUBOPT_0x1A:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
 SUBOPT_0x1B:
-	LDS  R26,_blueScores
-	LDS  R27,_blueScores+1
+	LDS  R26,_blue_scores
+	LDS  R27,_blue_scores+1
 	LDI  R30,LOW(100)
 	LDI  R31,HIGH(100)
 	RCALL __DIVW21
@@ -2665,8 +2663,8 @@ SUBOPT_0x1B:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:8 WORDS
 SUBOPT_0x1C:
-	LDS  R26,_blueScores
-	LDS  R27,_blueScores+1
+	LDS  R26,_blue_scores
+	LDS  R27,_blue_scores+1
 	LDI  R30,LOW(100)
 	LDI  R31,HIGH(100)
 	RCALL __MODW21
@@ -2678,8 +2676,8 @@ SUBOPT_0x1C:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
 SUBOPT_0x1D:
-	LDS  R26,_blueScores
-	LDS  R27,_blueScores+1
+	LDS  R26,_blue_scores
+	LDS  R27,_blue_scores+1
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	RCALL __MODW21

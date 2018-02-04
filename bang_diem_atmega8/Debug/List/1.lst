@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm Sun Feb 04 12:39:19 2018
+AVRASM ver. 2.1.30  D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm Sun Feb 04 13:29:17 2018
 
 D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1086): warning: Register r5 already defined by the .DEF directive
 D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1087): warning: Register r4 already defined by the .DEF directive
@@ -1105,8 +1105,8 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1095): warni
                  	.DEF _milisecond=R6
                  	.DEF _second=R11
                  	.DEF _led=R10
-                 	.DEF _redScore=R13
-                 	.DEF _blueScore=R12
+                 	.DEF _red_score=R13
+                 	.DEF _blue_score=R12
                  
                  	.CSEG
                  	.ORG 0x00
@@ -1173,7 +1173,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 00002b 003a      	.DW  _0x58*2
                  
 00002c 0001      	.DW  0x01
-00002d 0178      	.DW  _timeOut
+00002d 0178      	.DW  _time_out
 00002e 0044      	.DW  _0x59*2
                  
                  _0xFFFFFFFF:
@@ -1344,13 +1344,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000066 9aaa      	SBI  0x15,2
                  _0x7:
                  ;        delay_us(5);
-000067 d214      	RCALL SUBOPT_0x0
+000067 d213      	RCALL SUBOPT_0x0
                  ;        Buff = (Buff << 1);
 000068 81e9      	LDD  R30,Y+1
 000069 0fee      	LSL  R30
 00006a 83e9      	STD  Y+1,R30
                  ;        SCK = 1;
-00006b d214      	RCALL SUBOPT_0x1
+00006b d213      	RCALL SUBOPT_0x1
                  ;        delay_us(5);
                  ;        Buff |= MISO;
 00006c 81a9      	LDD  R26,Y+1
@@ -1373,7 +1373,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ;    unsigned char Buff=0;
                  ;    unsigned char bit_ctr;
                  ;    for(bit_ctr=0;bit_ctr<8;bit_ctr++){
-000074 d2f3      	RCALL __SAVELOCR2
+000074 d2f2      	RCALL __SAVELOCR2
                  ;	Buff -> R17
                  ;	bit_ctr -> R16
 000075 e010      	LDI  R17,0
@@ -1382,11 +1382,11 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000077 3008      	CPI  R16,8
 000078 f438      	BRSH _0xE
                  ;        delay_us(5);
-000079 d202      	RCALL SUBOPT_0x0
+000079 d201      	RCALL SUBOPT_0x0
                  ;        Buff = (Buff << 1);
 00007a 0f11      	LSL  R17
                  ;        SCK = 1;
-00007b d204      	RCALL SUBOPT_0x1
+00007b d203      	RCALL SUBOPT_0x1
                  ;        delay_us(5);
                  ;        Buff |= MISO;
 00007c 2b1e      	OR   R17,R30
@@ -1409,12 +1409,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _RF_Command:
                  ; .FSTART _RF_Command
                  ;    CSN=0;
-000084 d201      	RCALL SUBOPT_0x2
+000084 d200      	RCALL SUBOPT_0x2
                  ;	command -> Y+0
                  ;    SPI_Write(command);
-000085 d203      	RCALL SUBOPT_0x3
+000085 d202      	RCALL SUBOPT_0x3
                  ;    CSN=1;
-000086 d204      	RCALL SUBOPT_0x4
+000086 d203      	RCALL SUBOPT_0x4
                  ;    delay_us(10);
                  ;}
 000087 c066      	RJMP _0x2020002
@@ -1425,7 +1425,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _RF_Write:
                  ; .FSTART _RF_Write
                  ;    CSN=0;
-000088 d1fd      	RCALL SUBOPT_0x2
+000088 d1fc      	RCALL SUBOPT_0x2
                  ;	Reg_Add -> Y+1
                  ;	Value -> Y+0
                  ;    SPI_Write(0b00100000|Reg_Add);
@@ -1444,7 +1444,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _RF_Write_Add:
                  ; .FSTART _RF_Write_Add
                  ;    CSN=0;
-00008d d1f8      	RCALL SUBOPT_0x2
+00008d d1f7      	RCALL SUBOPT_0x2
                  ;	Reg_Add -> Y+1
                  ;	Value -> Y+0
                  ;    SPI_Write(0b00100000|Reg_Add);
@@ -1456,17 +1456,17 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000092 2da7      	MOV  R26,R7
 000093 dfc8      	RCALL _SPI_Write
                  ;    SPI_Write(Value);
-000094 d1f4      	RCALL SUBOPT_0x3
+000094 d1f3      	RCALL SUBOPT_0x3
                  ;    SPI_Write(Value);
-000095 d1f3      	RCALL SUBOPT_0x3
+000095 d1f2      	RCALL SUBOPT_0x3
                  ;    SPI_Write(Value);
 000096 81a8      	LD   R26,Y
                  _0x2020003:
 000097 dfc4      	RCALL _SPI_Write
                  ;    SPI_Write(Value);
-000098 d1f0      	RCALL SUBOPT_0x3
+000098 d1ef      	RCALL SUBOPT_0x3
                  ;    CSN=1;
-000099 d1f1      	RCALL SUBOPT_0x4
+000099 d1f0      	RCALL SUBOPT_0x4
                  ;    delay_us(10);
                  ;}
                  _0x2020004:
@@ -1489,7 +1489,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _RX_Address:
                  ; .FSTART _RX_Address
                  ;    CSN=0;
-00009c d1e9      	RCALL SUBOPT_0x2
+00009c d1e8      	RCALL SUBOPT_0x2
                  ;	Address -> Y+0
                  ;    RF_Write(SETUP_AW,0b00000011);
 00009d e0e3      	LDI  R30,LOW(3)
@@ -1497,7 +1497,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 00009f e0a3      	LDI  R26,LOW(3)
 0000a0 dfe7      	RCALL _RF_Write
                  ;    CSN=1;
-0000a1 d1e9      	RCALL SUBOPT_0x4
+0000a1 d1e8      	RCALL SUBOPT_0x4
                  ;    delay_us(10);
                  ;    CSN=0;
 0000a2 98a9      	CBI  0x15,1
@@ -1522,20 +1522,20 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ;    SCK=0;
 0000aa 98ad      	CBI  0x15,5
                  ;    delay_us(10);
-0000ab d1e4      	RCALL SUBOPT_0x5
+0000ab d1e3      	RCALL SUBOPT_0x5
                  ;    RF_Write(STATUS,0b01111110);
-0000ac d1e7      	RCALL SUBOPT_0x6
+0000ac d1e6      	RCALL SUBOPT_0x6
                  ;    RF_Command(0b11100010);
 0000ad eea2      	LDI  R26,LOW(226)
 0000ae dfd5      	RCALL _RF_Command
                  ;    RF_Write(CONFIG,0b00011111);
-0000af d1e8      	RCALL SUBOPT_0x7
+0000af d1e7      	RCALL SUBOPT_0x7
                  ;    delay_ms(2);
 0000b0 e0a2      	LDI  R26,LOW(2)
 0000b1 e0b0      	LDI  R27,0
-0000b2 d273      	RCALL _delay_ms
+0000b2 d272      	RCALL _delay_ms
                  ;    RF_Write(STATUS,0b01111110);
-0000b3 d1e0      	RCALL SUBOPT_0x6
+0000b3 d1df      	RCALL SUBOPT_0x6
                  ;    RF_Write(FEATURE, 0b00000100);
 0000b4 e1ed      	LDI  R30,LOW(29)
 0000b5 93ea      	ST   -Y,R30
@@ -1548,7 +1548,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0000bb dfcc      	RCALL _RF_Write
                  ;	RF_Write(0x11,0b00000001);
 0000bc e1e1      	LDI  R30,LOW(17)
-0000bd d1de      	RCALL SUBOPT_0x8
+0000bd d1dd      	RCALL SUBOPT_0x8
                  ;    RF_Write(RF_SETUP, 0b00000110);
 0000be e0e6      	LDI  R30,LOW(6)
 0000bf 93ea      	ST   -Y,R30
@@ -1556,10 +1556,10 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0000c1 dfc6      	RCALL _RF_Write
                  ;    RF_Write(DYNPD,0b00000001);
 0000c2 e1ec      	LDI  R30,LOW(28)
-0000c3 d1d8      	RCALL SUBOPT_0x8
+0000c3 d1d7      	RCALL SUBOPT_0x8
                  ;    RF_Write(EN_RXADDR,0b00000001);
 0000c4 e0e2      	LDI  R30,LOW(2)
-0000c5 d1d6      	RCALL SUBOPT_0x8
+0000c5 d1d5      	RCALL SUBOPT_0x8
                  ;}
 0000c6 9508      	RET
                  ; .FEND
@@ -1595,7 +1595,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _RX_Mode:
                  ; .FSTART _RX_Mode
                  ;    RF_Write(CONFIG,0b00011111);
-0000cf d1c8      	RCALL SUBOPT_0x7
+0000cf d1c7      	RCALL SUBOPT_0x7
                  ;    CE=1;
 0000d0 9a90      	SBI  0x12,0
                  ;}
@@ -1612,7 +1612,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _RX_Config:
                  ; .FSTART _RX_Config
                  ;    RF_Write(STATUS,0b01111110);
-0000d2 d1c1      	RCALL SUBOPT_0x6
+0000d2 d1c0      	RCALL SUBOPT_0x6
                  ;    RF_Command(0b11100010);
 0000d3 eea2      	LDI  R26,LOW(226)
 0000d4 dfaf      	RCALL _RF_Command
@@ -1660,7 +1660,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ;    CE=0;
 0000d8 9890      	CBI  0x12,0
                  ;    CSN=1;
-0000d9 d1b1      	RCALL SUBOPT_0x4
+0000d9 d1b0      	RCALL SUBOPT_0x4
                  ;    delay_us(10);
                  ;    CSN=0;
 0000da 98a9      	CBI  0x15,1
@@ -1668,7 +1668,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0000db e6a1      	LDI  R26,LOW(97)
 0000dc df7f      	RCALL _SPI_Write
                  ;    delay_us(10);
-0000dd d1b2      	RCALL SUBOPT_0x5
+0000dd d1b1      	RCALL SUBOPT_0x5
                  ;    score = SPI_Read();
 0000de df95      	RCALL _SPI_Read
 0000df 2e8e      	MOV  R8,R30
@@ -1678,7 +1678,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ;    CE=1;
 0000e2 9a90      	SBI  0x12,0
                  ;    RF_Write(STATUS,0b01111110);
-0000e3 d1b0      	RCALL SUBOPT_0x6
+0000e3 d1af      	RCALL SUBOPT_0x6
                  ;    RF_Command(0b11100010);
 0000e4 eea2      	LDI  R26,LOW(226)
 0000e5 df9e      	RCALL _RF_Command
@@ -1692,18 +1692,18 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ;unsigned char numberA[10] = {1, 0, 1, 1, 0, 1, 1, 1, 1, 1};
                  ;unsigned char milisecond = 100, second = 180;
                  ;unsigned char led = 1;
-                 ;unsigned char redScore = 0b0000;
-                 ;unsigned char blueScore = 0b0000;
-                 ;int redScores = 0, blueScores = 0;
-                 ;bool timeOut = true;
+                 ;unsigned char red_score = 0b0000;
+                 ;unsigned char blue_score = 0b0000;
+                 ;int red_scores = 0, blue_scores = 0;
+                 ;bool time_out = true;
                  ;int a;
                  ;
-                 ;bool checkFinish(unsigned char input){
-                 ; 0000 0027 _Bool checkFinish(unsigned char input){
+                 ;bool check_finish(unsigned char input){
+                 ; 0000 0027 _Bool check_finish(unsigned char input){
                  
                  	.CSEG
-                 _checkFinish:
-                 ; .FSTART _checkFinish
+                 _check_finish:
+                 ; .FSTART _check_finish
                  ; 0000 0028     if(input == 0b1111)
 0000e7 93aa      	ST   -Y,R26
                  ;	input -> Y+0
@@ -1723,20 +1723,20 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0000ef 9508      	RET
                  ; .FEND
                  ;
-                 ;void getScore(){
-                 ; 0000 002E void getScore(){
-                 _getScore:
-                 ; .FSTART _getScore
+                 ;void get_score(){
+                 ; 0000 002E void get_score(){
+                 _get_score:
+                 ; .FSTART _get_score
                  ; 0000 002F     if(score == 1){
 0000f0 e0e1      	LDI  R30,LOW(1)
 0000f1 e0f0      	LDI  R31,HIGH(1)
-0000f2 d1ac      	RCALL SUBOPT_0x9
+0000f2 d1ab      	RCALL SUBOPT_0x9
 0000f3 f431      	BRNE _0x5C
-                 ; 0000 0030         blueScores += 2;
-0000f4 d1ad      	RCALL SUBOPT_0xA
+                 ; 0000 0030         blue_scores += 2;
+0000f4 d1ac      	RCALL SUBOPT_0xA
 0000f5 9632      	ADIW R30,2
-0000f6 d1b0      	RCALL SUBOPT_0xB
-                 ; 0000 0031         blueScore |= 0b0001;
+0000f6 d1af      	RCALL SUBOPT_0xB
+                 ; 0000 0031         blue_score |= 0b0001;
 0000f7 e0e1      	LDI  R30,LOW(1)
 0000f8 2ace      	OR   R12,R30
                  ; 0000 0032     }
@@ -1745,13 +1745,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x5C:
 0000fa e0e2      	LDI  R30,LOW(2)
 0000fb e0f0      	LDI  R31,HIGH(2)
-0000fc d1a2      	RCALL SUBOPT_0x9
+0000fc d1a1      	RCALL SUBOPT_0x9
 0000fd f431      	BRNE _0x5E
-                 ; 0000 0034         blueScores += 3;
-0000fe d1a3      	RCALL SUBOPT_0xA
+                 ; 0000 0034         blue_scores += 3;
+0000fe d1a2      	RCALL SUBOPT_0xA
 0000ff 9633      	ADIW R30,3
-000100 d1a6      	RCALL SUBOPT_0xB
-                 ; 0000 0035         blueScore |= 0b0010;
+000100 d1a5      	RCALL SUBOPT_0xB
+                 ; 0000 0035         blue_score |= 0b0010;
 000101 e0e2      	LDI  R30,LOW(2)
 000102 2ace      	OR   R12,R30
                  ; 0000 0036     }
@@ -1760,13 +1760,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x5E:
 000104 e0e3      	LDI  R30,LOW(3)
 000105 e0f0      	LDI  R31,HIGH(3)
-000106 d198      	RCALL SUBOPT_0x9
+000106 d197      	RCALL SUBOPT_0x9
 000107 f431      	BRNE _0x60
-                 ; 0000 0038         blueScores += 5;
-000108 d199      	RCALL SUBOPT_0xA
+                 ; 0000 0038         blue_scores += 5;
+000108 d198      	RCALL SUBOPT_0xA
 000109 9635      	ADIW R30,5
-00010a d19c      	RCALL SUBOPT_0xB
-                 ; 0000 0039         blueScore |= 0b0100;
+00010a d19b      	RCALL SUBOPT_0xB
+                 ; 0000 0039         blue_score |= 0b0100;
 00010b e0e4      	LDI  R30,LOW(4)
 00010c 2ace      	OR   R12,R30
                  ; 0000 003A     }
@@ -1775,13 +1775,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x60:
 00010e e0e4      	LDI  R30,LOW(4)
 00010f e0f0      	LDI  R31,HIGH(4)
-000110 d18e      	RCALL SUBOPT_0x9
+000110 d18d      	RCALL SUBOPT_0x9
 000111 f431      	BRNE _0x62
-                 ; 0000 003C         blueScores += 10;
-000112 d18f      	RCALL SUBOPT_0xA
+                 ; 0000 003C         blue_scores += 10;
+000112 d18e      	RCALL SUBOPT_0xA
 000113 963a      	ADIW R30,10
-000114 d192      	RCALL SUBOPT_0xB
-                 ; 0000 003D         blueScore |= 0b1000;
+000114 d191      	RCALL SUBOPT_0xB
+                 ; 0000 003D         blue_score |= 0b1000;
 000115 e0e8      	LDI  R30,LOW(8)
 000116 2ace      	OR   R12,R30
                  ; 0000 003E     }
@@ -1790,13 +1790,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x62:
 000118 e0e5      	LDI  R30,LOW(5)
 000119 e0f0      	LDI  R31,HIGH(5)
-00011a d184      	RCALL SUBOPT_0x9
+00011a d183      	RCALL SUBOPT_0x9
 00011b f429      	BRNE _0x64
-                 ; 0000 0040         redScores += 2;
-00011c d18f      	RCALL SUBOPT_0xC
+                 ; 0000 0040         red_scores += 2;
+00011c d18e      	RCALL SUBOPT_0xC
 00011d 9632      	ADIW R30,2
-00011e d192      	RCALL SUBOPT_0xD
-                 ; 0000 0041         redScore |= 0b0001;
+00011e d191      	RCALL SUBOPT_0xD
+                 ; 0000 0041         red_score |= 0b0001;
 00011f e0e1      	LDI  R30,LOW(1)
 000120 c01a      	RJMP _0x141
                  ; 0000 0042     }
@@ -1804,13 +1804,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x64:
 000121 e0e6      	LDI  R30,LOW(6)
 000122 e0f0      	LDI  R31,HIGH(6)
-000123 d17b      	RCALL SUBOPT_0x9
+000123 d17a      	RCALL SUBOPT_0x9
 000124 f429      	BRNE _0x66
-                 ; 0000 0044         redScores += 3;
-000125 d186      	RCALL SUBOPT_0xC
+                 ; 0000 0044         red_scores += 3;
+000125 d185      	RCALL SUBOPT_0xC
 000126 9633      	ADIW R30,3
-000127 d189      	RCALL SUBOPT_0xD
-                 ; 0000 0045         redScore |= 0b0010;
+000127 d188      	RCALL SUBOPT_0xD
+                 ; 0000 0045         red_score |= 0b0010;
 000128 e0e2      	LDI  R30,LOW(2)
 000129 c011      	RJMP _0x141
                  ; 0000 0046     }
@@ -1818,13 +1818,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x66:
 00012a e0e7      	LDI  R30,LOW(7)
 00012b e0f0      	LDI  R31,HIGH(7)
-00012c d172      	RCALL SUBOPT_0x9
+00012c d171      	RCALL SUBOPT_0x9
 00012d f429      	BRNE _0x68
-                 ; 0000 0048         redScores += 5;
-00012e d17d      	RCALL SUBOPT_0xC
+                 ; 0000 0048         red_scores += 5;
+00012e d17c      	RCALL SUBOPT_0xC
 00012f 9635      	ADIW R30,5
-000130 d180      	RCALL SUBOPT_0xD
-                 ; 0000 0049         redScore |= 0b0100;
+000130 d17f      	RCALL SUBOPT_0xD
+                 ; 0000 0049         red_score |= 0b0100;
 000131 e0e4      	LDI  R30,LOW(4)
 000132 c008      	RJMP _0x141
                  ; 0000 004A     }
@@ -1832,13 +1832,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x68:
 000133 e0e8      	LDI  R30,LOW(8)
 000134 e0f0      	LDI  R31,HIGH(8)
-000135 d169      	RCALL SUBOPT_0x9
+000135 d168      	RCALL SUBOPT_0x9
 000136 f429      	BRNE _0x6A
-                 ; 0000 004C         redScores += 10;
-000137 d174      	RCALL SUBOPT_0xC
+                 ; 0000 004C         red_scores += 10;
+000137 d173      	RCALL SUBOPT_0xC
 000138 963a      	ADIW R30,10
-000139 d177      	RCALL SUBOPT_0xD
-                 ; 0000 004D         redScore |= 0b1000;
+000139 d176      	RCALL SUBOPT_0xD
+                 ; 0000 004D         red_score |= 0b1000;
 00013a e0e8      	LDI  R30,LOW(8)
                  _0x141:
 00013b 2ade      	OR   R13,R30
@@ -1852,26 +1852,26 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 00013c 9508      	RET
                  ; .FEND
                  ;
-                 ;void stopGame(){
-                 ; 0000 0051 void stopGame(){
-                 _stopGame:
-                 ; .FSTART _stopGame
-                 ; 0000 0052     timeOut = true;
+                 ;void stop_game(){
+                 ; 0000 0051 void stop_game(){
+                 _stop_game:
+                 ; .FSTART _stop_game
+                 ; 0000 0052     time_out = true;
 00013d e0e1      	LDI  R30,LOW(1)
-00013e 93e0 0178 	STS  _timeOut,R30
+00013e 93e0 0178 	STS  _time_out,R30
                  ; 0000 0053     TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (1<<TOIE1) | (1<<TOIE0);
 000140 e0e5      	LDI  R30,LOW(5)
 000141 c004      	RJMP _0x2020001
                  ; 0000 0054 }
                  ; .FEND
                  ;
-                 ;void startGame(){
-                 ; 0000 0056 void startGame(){
-                 _startGame:
-                 ; .FSTART _startGame
-                 ; 0000 0057     timeOut = false;
+                 ;void start_game(){
+                 ; 0000 0056 void start_game(){
+                 _start_game:
+                 ; .FSTART _start_game
+                 ; 0000 0057     time_out = false;
 000142 e0e0      	LDI  R30,LOW(0)
-000143 93e0 0178 	STS  _timeOut,R30
+000143 93e0 0178 	STS  _time_out,R30
                  ; 0000 0058     TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (1<<TOIE1) | (1<<TOIE0);
 000145 e4e5      	LDI  R30,LOW(69)
                  _0x2020001:
@@ -1880,10 +1880,10 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000147 9508      	RET
                  ; .FEND
                  ;
-                 ;void resetGame(){
-                 ; 0000 005B void resetGame(){
-                 _resetGame:
-                 ; .FSTART _resetGame
+                 ;void reset_game(){
+                 ; 0000 005B void reset_game(){
+                 _reset_game:
+                 ; .FSTART _reset_game
                  ; 0000 005C     WDTCR=0x18;
 000148 e1e8      	LDI  R30,LOW(24)
 000149 bde1      	OUT  0x21,R30
@@ -1909,19 +1909,19 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000153 93fa      	ST   -Y,R31
 000154 b7ef      	IN   R30,SREG
 000155 93ea      	ST   -Y,R30
-                 ; 0000 0062     TCNT0=0x45;
-000156 e4e5      	LDI  R30,LOW(69)
+                 ; 0000 0062     TCNT0=0x06;
+000156 e0e6      	LDI  R30,LOW(6)
 000157 bfe2      	OUT  0x32,R30
                  ; 0000 0063     if(led == 1){
 000158 e0e1      	LDI  R30,LOW(1)
 000159 15ea      	CP   R30,R10
 00015a f461      	BRNE _0x6E
                  ; 0000 0064         LED_SEG = number[second/100];
-00015b d15a      	RCALL SUBOPT_0xE
-00015c d15f      	RCALL SUBOPT_0xF
+00015b d159      	RCALL SUBOPT_0xE
+00015c d15e      	RCALL SUBOPT_0xF
                  ; 0000 0065         LED_A = numberA[second/100];
-00015d d158      	RCALL SUBOPT_0xE
-00015e d162      	RCALL SUBOPT_0x10
+00015d d157      	RCALL SUBOPT_0xE
+00015e d161      	RCALL SUBOPT_0x10
 00015f f411      	BRNE _0x6F
 000160 98a8      	CBI  0x15,0
 000161 c001      	RJMP _0x70
@@ -1931,10 +1931,10 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ; 0000 0066         LED_TIME1 =         0;
 000163 9897      	CBI  0x12,7
                  ; 0000 0067         LED_TIME2 =         1;
-000164 d161      	RCALL SUBOPT_0x11
+000164 d160      	RCALL SUBOPT_0x11
                  ; 0000 0068         LED_TIME3 =         1;
                  ; 0000 0069         LED_RED_SCORE1 =    1;
-000165 d163      	RCALL SUBOPT_0x12
+000165 d162      	RCALL SUBOPT_0x12
                  ; 0000 006A         LED_RED_SCORE2 =    1;
                  ; 0000 006B         LED_RED_SCORE3 =    1;
                  ; 0000 006C         LED_BLUE_SCORE1 =   1;
@@ -1950,11 +1950,11 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000168 15ea      	CP   R30,R10
 000169 f469      	BRNE _0x84
                  ; 0000 0073         LED_SEG = number[(second%100)/10];
-00016a d165      	RCALL SUBOPT_0x13
-00016b d150      	RCALL SUBOPT_0xF
+00016a d164      	RCALL SUBOPT_0x13
+00016b d14f      	RCALL SUBOPT_0xF
                  ; 0000 0074         LED_A = numberA[(second%100)/10];
-00016c d163      	RCALL SUBOPT_0x13
-00016d d153      	RCALL SUBOPT_0x10
+00016c d162      	RCALL SUBOPT_0x13
+00016d d152      	RCALL SUBOPT_0x10
 00016e f411      	BRNE _0x85
 00016f 98a8      	CBI  0x15,0
 000170 c001      	RJMP _0x86
@@ -1968,7 +1968,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ; 0000 0077         LED_TIME3 =         1;
 000174 9a95      	SBI  0x12,5
                  ; 0000 0078         LED_RED_SCORE1 =    1;
-000175 d153      	RCALL SUBOPT_0x12
+000175 d152      	RCALL SUBOPT_0x12
                  ; 0000 0079         LED_RED_SCORE2 =    1;
                  ; 0000 007A         LED_RED_SCORE3 =    1;
                  ; 0000 007B         LED_BLUE_SCORE1 =   1;
@@ -1983,11 +1983,11 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000178 15ea      	CP   R30,R10
 000179 f469      	BRNE _0x9A
                  ; 0000 0081         LED_SEG = number[second%10];
-00017a d15f      	RCALL SUBOPT_0x14
-00017b d140      	RCALL SUBOPT_0xF
+00017a d15e      	RCALL SUBOPT_0x14
+00017b d13f      	RCALL SUBOPT_0xF
                  ; 0000 0082         LED_A = numberA[second%10];
-00017c d15d      	RCALL SUBOPT_0x14
-00017d d143      	RCALL SUBOPT_0x10
+00017c d15c      	RCALL SUBOPT_0x14
+00017d d142      	RCALL SUBOPT_0x10
 00017e f411      	BRNE _0x9B
 00017f 98a8      	CBI  0x15,0
 000180 c001      	RJMP _0x9C
@@ -2001,7 +2001,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ; 0000 0085         LED_TIME3 =         0;
 000184 9895      	CBI  0x12,5
                  ; 0000 0086         LED_RED_SCORE1 =    1;
-000185 d143      	RCALL SUBOPT_0x12
+000185 d142      	RCALL SUBOPT_0x12
                  ; 0000 0087         LED_RED_SCORE2 =    1;
                  ; 0000 0088         LED_RED_SCORE3 =    1;
                  ; 0000 0089         LED_BLUE_SCORE1 =   1;
@@ -2015,12 +2015,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000187 e0e4      	LDI  R30,LOW(4)
 000188 15ea      	CP   R30,R10
 000189 f469      	BRNE _0xB0
-                 ; 0000 008F         LED_SEG = number[redScores/100];
-00018a d155      	RCALL SUBOPT_0x15
-00018b d130      	RCALL SUBOPT_0xF
-                 ; 0000 0090         LED_A = numberA[redScores/100];
-00018c d153      	RCALL SUBOPT_0x15
-00018d d133      	RCALL SUBOPT_0x10
+                 ; 0000 008F         LED_SEG = number[red_scores/100];
+00018a d154      	RCALL SUBOPT_0x15
+00018b d12f      	RCALL SUBOPT_0xF
+                 ; 0000 0090         LED_A = numberA[red_scores/100];
+00018c d152      	RCALL SUBOPT_0x15
+00018d d132      	RCALL SUBOPT_0x10
 00018e f411      	BRNE _0xB1
 00018f 98a8      	CBI  0x15,0
 000190 c001      	RJMP _0xB2
@@ -2028,16 +2028,16 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000191 9aa8      	SBI  0x15,0
                  _0xB2:
                  ; 0000 0091         LED_TIME1 =         1;
-000192 d155      	RCALL SUBOPT_0x16
+000192 d154      	RCALL SUBOPT_0x16
                  ; 0000 0092         LED_TIME2 =         1;
                  ; 0000 0093         LED_TIME3 =         1;
                  ; 0000 0094         LED_RED_SCORE1 =    0;
 000193 9894      	CBI  0x12,4
                  ; 0000 0095         LED_RED_SCORE2 =    1;
-000194 d155      	RCALL SUBOPT_0x17
+000194 d154      	RCALL SUBOPT_0x17
                  ; 0000 0096         LED_RED_SCORE3 =    1;
                  ; 0000 0097         LED_BLUE_SCORE1 =   1;
-000195 d157      	RCALL SUBOPT_0x18
+000195 d156      	RCALL SUBOPT_0x18
                  ; 0000 0098         LED_BLUE_SCORE2 =   1;
                  ; 0000 0099         LED_BLUE_SCORE3 =   1;
                  ; 0000 009A     }
@@ -2048,12 +2048,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000197 e0e5      	LDI  R30,LOW(5)
 000198 15ea      	CP   R30,R10
 000199 f471      	BRNE _0xC6
-                 ; 0000 009D         LED_SEG = number[(redScores%100)/10];
-00019a d156      	RCALL SUBOPT_0x19
-00019b d120      	RCALL SUBOPT_0xF
-                 ; 0000 009E         LED_A = numberA[(redScores%100)/10];
-00019c d154      	RCALL SUBOPT_0x19
-00019d d123      	RCALL SUBOPT_0x10
+                 ; 0000 009D         LED_SEG = number[(red_scores%100)/10];
+00019a d155      	RCALL SUBOPT_0x19
+00019b d11f      	RCALL SUBOPT_0xF
+                 ; 0000 009E         LED_A = numberA[(red_scores%100)/10];
+00019c d153      	RCALL SUBOPT_0x19
+00019d d122      	RCALL SUBOPT_0x10
 00019e f411      	BRNE _0xC7
 00019f 98a8      	CBI  0x15,0
 0001a0 c001      	RJMP _0xC8
@@ -2061,7 +2061,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001a1 9aa8      	SBI  0x15,0
                  _0xC8:
                  ; 0000 009F         LED_TIME1 =         1;
-0001a2 d145      	RCALL SUBOPT_0x16
+0001a2 d144      	RCALL SUBOPT_0x16
                  ; 0000 00A0         LED_TIME2 =         1;
                  ; 0000 00A1         LED_TIME3 =         1;
                  ; 0000 00A2         LED_RED_SCORE1 =    1;
@@ -2071,7 +2071,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ; 0000 00A4         LED_RED_SCORE3 =    1;
 0001a5 9ac7      	SBI  0x18,7
                  ; 0000 00A5         LED_BLUE_SCORE1 =   1;
-0001a6 d146      	RCALL SUBOPT_0x18
+0001a6 d145      	RCALL SUBOPT_0x18
                  ; 0000 00A6         LED_BLUE_SCORE2 =   1;
                  ; 0000 00A7         LED_BLUE_SCORE3 =   1;
                  ; 0000 00A8     }
@@ -2082,12 +2082,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001a8 e0e6      	LDI  R30,LOW(6)
 0001a9 15ea      	CP   R30,R10
 0001aa f471      	BRNE _0xDC
-                 ; 0000 00AB         LED_SEG = number[redScores%10];
-0001ab d151      	RCALL SUBOPT_0x1A
-0001ac d10f      	RCALL SUBOPT_0xF
-                 ; 0000 00AC         LED_A = numberA[redScores%10];
-0001ad d14f      	RCALL SUBOPT_0x1A
-0001ae d112      	RCALL SUBOPT_0x10
+                 ; 0000 00AB         LED_SEG = number[red_scores%10];
+0001ab d150      	RCALL SUBOPT_0x1A
+0001ac d10e      	RCALL SUBOPT_0xF
+                 ; 0000 00AC         LED_A = numberA[red_scores%10];
+0001ad d14e      	RCALL SUBOPT_0x1A
+0001ae d111      	RCALL SUBOPT_0x10
 0001af f411      	BRNE _0xDD
 0001b0 98a8      	CBI  0x15,0
 0001b1 c001      	RJMP _0xDE
@@ -2095,7 +2095,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001b2 9aa8      	SBI  0x15,0
                  _0xDE:
                  ; 0000 00AD         LED_TIME1 =         1;
-0001b3 d134      	RCALL SUBOPT_0x16
+0001b3 d133      	RCALL SUBOPT_0x16
                  ; 0000 00AE         LED_TIME2 =         1;
                  ; 0000 00AF         LED_TIME3 =         1;
                  ; 0000 00B0         LED_RED_SCORE1 =    1;
@@ -2105,7 +2105,7 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ; 0000 00B2         LED_RED_SCORE3 =    0;
 0001b6 98c7      	CBI  0x18,7
                  ; 0000 00B3         LED_BLUE_SCORE1 =   1;
-0001b7 d135      	RCALL SUBOPT_0x18
+0001b7 d134      	RCALL SUBOPT_0x18
                  ; 0000 00B4         LED_BLUE_SCORE2 =   1;
                  ; 0000 00B5         LED_BLUE_SCORE3 =   1;
                  ; 0000 00B6     }
@@ -2116,12 +2116,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001b9 e0e7      	LDI  R30,LOW(7)
 0001ba 15ea      	CP   R30,R10
 0001bb f479      	BRNE _0xF2
-                 ; 0000 00B9         LED_SEG = number[blueScores/100];
-0001bc d148      	RCALL SUBOPT_0x1B
-0001bd d0fe      	RCALL SUBOPT_0xF
-                 ; 0000 00BA         LED_A = numberA[blueScores/100];
-0001be d146      	RCALL SUBOPT_0x1B
-0001bf d101      	RCALL SUBOPT_0x10
+                 ; 0000 00B9         LED_SEG = number[blue_scores/100];
+0001bc d147      	RCALL SUBOPT_0x1B
+0001bd d0fd      	RCALL SUBOPT_0xF
+                 ; 0000 00BA         LED_A = numberA[blue_scores/100];
+0001be d145      	RCALL SUBOPT_0x1B
+0001bf d100      	RCALL SUBOPT_0x10
 0001c0 f411      	BRNE _0xF3
 0001c1 98a8      	CBI  0x15,0
 0001c2 c001      	RJMP _0xF4
@@ -2129,13 +2129,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001c3 9aa8      	SBI  0x15,0
                  _0xF4:
                  ; 0000 00BB         LED_TIME1 =         1;
-0001c4 d123      	RCALL SUBOPT_0x16
+0001c4 d122      	RCALL SUBOPT_0x16
                  ; 0000 00BC         LED_TIME2 =         1;
                  ; 0000 00BD         LED_TIME3 =         1;
                  ; 0000 00BE         LED_RED_SCORE1 =    1;
 0001c5 9a94      	SBI  0x12,4
                  ; 0000 00BF         LED_RED_SCORE2 =    1;
-0001c6 d123      	RCALL SUBOPT_0x17
+0001c6 d122      	RCALL SUBOPT_0x17
                  ; 0000 00C0         LED_RED_SCORE3 =    1;
                  ; 0000 00C1         LED_BLUE_SCORE1 =   0;
 0001c7 9891      	CBI  0x12,1
@@ -2151,12 +2151,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001cb e0e8      	LDI  R30,LOW(8)
 0001cc 15ea      	CP   R30,R10
 0001cd f479      	BRNE _0x108
-                 ; 0000 00C7         LED_SEG = number[(blueScores%100)/10];
-0001ce d13e      	RCALL SUBOPT_0x1C
-0001cf d0ec      	RCALL SUBOPT_0xF
-                 ; 0000 00C8         LED_A = numberA[(blueScores%100)/10];
-0001d0 d13c      	RCALL SUBOPT_0x1C
-0001d1 d0ef      	RCALL SUBOPT_0x10
+                 ; 0000 00C7         LED_SEG = number[(blue_scores%100)/10];
+0001ce d13d      	RCALL SUBOPT_0x1C
+0001cf d0eb      	RCALL SUBOPT_0xF
+                 ; 0000 00C8         LED_A = numberA[(blue_scores%100)/10];
+0001d0 d13b      	RCALL SUBOPT_0x1C
+0001d1 d0ee      	RCALL SUBOPT_0x10
 0001d2 f411      	BRNE _0x109
 0001d3 98a8      	CBI  0x15,0
 0001d4 c001      	RJMP _0x10A
@@ -2164,13 +2164,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001d5 9aa8      	SBI  0x15,0
                  _0x10A:
                  ; 0000 00C9         LED_TIME1 =         1;
-0001d6 d111      	RCALL SUBOPT_0x16
+0001d6 d110      	RCALL SUBOPT_0x16
                  ; 0000 00CA         LED_TIME2 =         1;
                  ; 0000 00CB         LED_TIME3 =         1;
                  ; 0000 00CC         LED_RED_SCORE1 =    1;
 0001d7 9a94      	SBI  0x12,4
                  ; 0000 00CD         LED_RED_SCORE2 =    1;
-0001d8 d111      	RCALL SUBOPT_0x17
+0001d8 d110      	RCALL SUBOPT_0x17
                  ; 0000 00CE         LED_RED_SCORE3 =    1;
                  ; 0000 00CF         LED_BLUE_SCORE1 =   1;
 0001d9 9a91      	SBI  0x12,1
@@ -2186,12 +2186,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001dd e0e9      	LDI  R30,LOW(9)
 0001de 15ea      	CP   R30,R10
 0001df f479      	BRNE _0x11E
-                 ; 0000 00D5         LED_SEG = number[blueScores%10];
-0001e0 d138      	RCALL SUBOPT_0x1D
-0001e1 d0da      	RCALL SUBOPT_0xF
-                 ; 0000 00D6         LED_A = numberA[blueScores%10];
-0001e2 d136      	RCALL SUBOPT_0x1D
-0001e3 d0dd      	RCALL SUBOPT_0x10
+                 ; 0000 00D5         LED_SEG = number[blue_scores%10];
+0001e0 d137      	RCALL SUBOPT_0x1D
+0001e1 d0d9      	RCALL SUBOPT_0xF
+                 ; 0000 00D6         LED_A = numberA[blue_scores%10];
+0001e2 d135      	RCALL SUBOPT_0x1D
+0001e3 d0dc      	RCALL SUBOPT_0x10
 0001e4 f411      	BRNE _0x11F
 0001e5 98a8      	CBI  0x15,0
 0001e6 c001      	RJMP _0x120
@@ -2199,13 +2199,13 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 0001e7 9aa8      	SBI  0x15,0
                  _0x120:
                  ; 0000 00D7         LED_TIME1 =         1;
-0001e8 d0ff      	RCALL SUBOPT_0x16
+0001e8 d0fe      	RCALL SUBOPT_0x16
                  ; 0000 00D8         LED_TIME2 =         1;
                  ; 0000 00D9         LED_TIME3 =         1;
                  ; 0000 00DA         LED_RED_SCORE1 =    1;
 0001e9 9a94      	SBI  0x12,4
                  ; 0000 00DB         LED_RED_SCORE2 =    1;
-0001ea d0ff      	RCALL SUBOPT_0x17
+0001ea d0fe      	RCALL SUBOPT_0x17
                  ; 0000 00DC         LED_RED_SCORE3 =    1;
                  ; 0000 00DD         LED_BLUE_SCORE1 =   1;
 0001eb 9a91      	SBI  0x12,1
@@ -2295,8 +2295,8 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  _0x134:
 000221 20bb      	TST  R11
 000222 f409      	BRNE _0x135
-                 ; 0000 00F2         stopGame();
-000223 df19      	RCALL _stopGame
+                 ; 0000 00F2         stop_game();
+000223 df19      	RCALL _stop_game
                  ; 0000 00F3     }
                  ; 0000 00F4 }
                  _0x135:
@@ -2341,12 +2341,12 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 00023b e0e0      	LDI  R30,LOW(0)
 00023c bbe5      	OUT  0x15,R30
                  ; 0000 0100 
-                 ; 0000 0101 //2.912ms
+                 ; 0000 0101 
                  ; 0000 0102 TCCR0=(0<<CS02) | (1<<CS01) | (1<<CS00);
 00023d e0e3      	LDI  R30,LOW(3)
 00023e bfe3      	OUT  0x33,R30
-                 ; 0000 0103 TCNT0=0x45;
-00023f e4e5      	LDI  R30,LOW(69)
+                 ; 0000 0103 TCNT0=0x06;
+00023f e0e6      	LDI  R30,LOW(6)
 000240 bfe2      	OUT  0x32,R30
                  ; 0000 0104 
                  ; 0000 0105 
@@ -2375,97 +2375,95 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ; 0000 0111 Common_Config();
 00024c de5b      	RCALL _Common_Config
                  ; 0000 0112 delay_us(10);
-00024d d042      	RCALL SUBOPT_0x5
+00024d d041      	RCALL SUBOPT_0x5
                  ; 0000 0113 Common_Init();
 00024e de78      	RCALL _Common_Init
                  ; 0000 0114 delay_us(10);
-00024f d040      	RCALL SUBOPT_0x5
+00024f d03f      	RCALL SUBOPT_0x5
                  ; 0000 0115 RX_Config();
 000250 de81      	RCALL _RX_Config
                  ; 0000 0116 delay_us(10);
-000251 d03e      	RCALL SUBOPT_0x5
+000251 d03d      	RCALL SUBOPT_0x5
                  ; 0000 0117 RX_Mode();
 000252 de7c      	RCALL _RX_Mode
                  ; 0000 0118 
                  ; 0000 0119 
                  ; 0000 011A while (1){
                  _0x136:
-                 ; 0000 011B     RX_Config();
-000253 de7e      	RCALL _RX_Config
-                 ; 0000 011C     if(IRQ == 0){
-000254 999b      	SBIC 0x13,3
-000255 c023      	RJMP _0x139
-                 ; 0000 011D         RX_Read();
-000256 de81      	RCALL _RX_Read
-                 ; 0000 011E         if(score == 9)
-000257 e0e9      	LDI  R30,LOW(9)
-000258 e0f0      	LDI  R31,HIGH(9)
-000259 d045      	RCALL SUBOPT_0x9
-00025a f411      	BRNE _0x13A
-                 ; 0000 011F             resetGame();
-00025b deec      	RCALL _resetGame
-                 ; 0000 0120         else if(score == 10){
-00025c c006      	RJMP _0x13B
+                 ; 0000 011B     if(IRQ == 0){
+000253 999b      	SBIC 0x13,3
+000254 c024      	RJMP _0x139
+                 ; 0000 011C         RX_Read();
+000255 de82      	RCALL _RX_Read
+                 ; 0000 011D         if(score == 9)
+000256 e0e9      	LDI  R30,LOW(9)
+000257 e0f0      	LDI  R31,HIGH(9)
+000258 d045      	RCALL SUBOPT_0x9
+000259 f411      	BRNE _0x13A
+                 ; 0000 011E             reset_game();
+00025a deed      	RCALL _reset_game
+                 ; 0000 011F         else if(score == 10){
+00025b c006      	RJMP _0x13B
                  _0x13A:
-00025d e0ea      	LDI  R30,LOW(10)
-00025e e0f0      	LDI  R31,HIGH(10)
-00025f d03f      	RCALL SUBOPT_0x9
-000260 f411      	BRNE _0x13C
-                 ; 0000 0121             startGame();
-000261 dee0      	RCALL _startGame
-                 ; 0000 0122             RX_Config();
-000262 de6f      	RCALL _RX_Config
-                 ; 0000 0123         }
-                 ; 0000 0124         if(!timeOut){
+00025c e0ea      	LDI  R30,LOW(10)
+00025d e0f0      	LDI  R31,HIGH(10)
+00025e d03f      	RCALL SUBOPT_0x9
+00025f f411      	BRNE _0x13C
+                 ; 0000 0120             start_game();
+000260 dee1      	RCALL _start_game
+                 ; 0000 0121             RX_Config();
+000261 de70      	RCALL _RX_Config
+                 ; 0000 0122         }
+                 ; 0000 0123         if(!time_out){
                  _0x13C:
                  _0x13B:
-000263 91e0 0178 	LDS  R30,_timeOut
-000265 30e0      	CPI  R30,0
-000266 f421      	BRNE _0x13D
-                 ; 0000 0125             getScore();
-000267 de88      	RCALL _getScore
-                 ; 0000 0126             delay_ms(500);
-000268 efa4      	LDI  R26,LOW(500)
-000269 e0b1      	LDI  R27,HIGH(500)
-00026a d0bb      	RCALL _delay_ms
-                 ; 0000 0127         }
-                 ; 0000 0128 
-                 ; 0000 0129         if(checkFinish(redScore)){
+000262 91e0 0178 	LDS  R30,_time_out
+000264 30e0      	CPI  R30,0
+000265 f421      	BRNE _0x13D
+                 ; 0000 0124             get_score();
+000266 de89      	RCALL _get_score
+                 ; 0000 0125             delay_ms(500);
+000267 efa4      	LDI  R26,LOW(500)
+000268 e0b1      	LDI  R27,HIGH(500)
+000269 d0bb      	RCALL _delay_ms
+                 ; 0000 0126         }
+                 ; 0000 0127 
+                 ; 0000 0128         if(check_finish(red_score)){
                  _0x13D:
-00026b 2dad      	MOV  R26,R13
-00026c de7a      	RCALL _checkFinish
-00026d 30e0      	CPI  R30,0
-00026e f019      	BREQ _0x13E
-                 ; 0000 012A             TIMSK = (0<<TOIE2) | (1<<TOIE0);
-00026f d0b1      	RCALL SUBOPT_0x1E
-                 ; 0000 012B             redScores = 999;
-000270 d040      	RCALL SUBOPT_0xD
-                 ; 0000 012C             stopGame();
-000271 decb      	RCALL _stopGame
-                 ; 0000 012D         }
-                 ; 0000 012E         if(checkFinish(blueScore)){
+00026a 2dad      	MOV  R26,R13
+00026b de7b      	RCALL _check_finish
+00026c 30e0      	CPI  R30,0
+00026d f019      	BREQ _0x13E
+                 ; 0000 0129             TIMSK = (0<<TOIE2) | (1<<TOIE0);
+00026e d0b1      	RCALL SUBOPT_0x1E
+                 ; 0000 012A             red_scores = 999;
+00026f d040      	RCALL SUBOPT_0xD
+                 ; 0000 012B             stop_game();
+000270 decc      	RCALL _stop_game
+                 ; 0000 012C         }
+                 ; 0000 012D         if(check_finish(blue_score)){
                  _0x13E:
-000272 2dac      	MOV  R26,R12
-000273 de73      	RCALL _checkFinish
-000274 30e0      	CPI  R30,0
-000275 f019      	BREQ _0x13F
-                 ; 0000 012F             TIMSK = (0<<TOIE2) | (1<<TOIE0);
-000276 d0aa      	RCALL SUBOPT_0x1E
-                 ; 0000 0130             blueScores = 999;
-000277 d02f      	RCALL SUBOPT_0xB
-                 ; 0000 0131             stopGame();
-000278 dec4      	RCALL _stopGame
-                 ; 0000 0132         }
-                 ; 0000 0133     }
+000271 2dac      	MOV  R26,R12
+000272 de74      	RCALL _check_finish
+000273 30e0      	CPI  R30,0
+000274 f019      	BREQ _0x13F
+                 ; 0000 012E             TIMSK = (0<<TOIE2) | (1<<TOIE0);
+000275 d0aa      	RCALL SUBOPT_0x1E
+                 ; 0000 012F             blue_scores = 999;
+000276 d02f      	RCALL SUBOPT_0xB
+                 ; 0000 0130             stop_game();
+000277 dec5      	RCALL _stop_game
+                 ; 0000 0131         }
+                 ; 0000 0132         RX_Config();
                  _0x13F:
-                 ; 0000 0134     RX_Config();
+000278 de59      	RCALL _RX_Config
+                 ; 0000 0133     }
+                 ; 0000 0134 }
                  _0x139:
-000279 de58      	RCALL _RX_Config
+000279 cfd9      	RJMP _0x136
                  ; 0000 0135 }
-00027a cfd8      	RJMP _0x136
-                 ; 0000 0136 }
                  _0x140:
-00027b cfff      	RJMP _0x140
+00027a cfff      	RJMP _0x140
                  ; .FEND
                  
                  	.CSEG
@@ -2475,11 +2473,11 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
 000160           	.BYTE 0xA
                  _numberA:
 00016a           	.BYTE 0xA
-                 _redScores:
+                 _red_scores:
 000174           	.BYTE 0x2
-                 _blueScores:
+                 _blue_scores:
 000176           	.BYTE 0x2
-                 _timeOut:
+                 _time_out:
 000178           	.BYTE 0x1
                  _a:
 000179           	.BYTE 0x2
@@ -2488,352 +2486,352 @@ D:\Embedded\ATmega\thi_robot_new\bang_diem_atmega8\Debug\List\1.asm(1137): warni
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x0:
                 +
-00027c e08d     +LDI R24 , LOW ( 13 )
+00027b e08d     +LDI R24 , LOW ( 13 )
                 +__DELAY_USB_LOOP :
-00027d 958a     +DEC R24
-00027e f7f1     +BRNE __DELAY_USB_LOOP
+00027c 958a     +DEC R24
+00027d f7f1     +BRNE __DELAY_USB_LOOP
                  	__DELAY_USB 13
-00027f 9508      	RET
+00027e 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
                  SUBOPT_0x1:
-000280 9aad      	SBI  0x15,5
-000281 dffa      	RCALL SUBOPT_0x0
-000282 e0e0      	LDI  R30,0
-000283 999c      	SBIC 0x13,4
-000284 e0e1      	LDI  R30,1
-000285 9508      	RET
+00027f 9aad      	SBI  0x15,5
+000280 dffa      	RCALL SUBOPT_0x0
+000281 e0e0      	LDI  R30,0
+000282 999c      	SBIC 0x13,4
+000283 e0e1      	LDI  R30,1
+000284 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x2:
-000286 93aa      	ST   -Y,R26
-000287 98a9      	CBI  0x15,1
-000288 9508      	RET
+000285 93aa      	ST   -Y,R26
+000286 98a9      	CBI  0x15,1
+000287 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x3:
-000289 81a8      	LD   R26,Y
-00028a cdd1      	RJMP _SPI_Write
+000288 81a8      	LD   R26,Y
+000289 cdd2      	RJMP _SPI_Write
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:7 WORDS
                  SUBOPT_0x4:
-00028b 9aa9      	SBI  0x15,1
+00028a 9aa9      	SBI  0x15,1
                 +
-00028c e18b     +LDI R24 , LOW ( 27 )
+00028b e18b     +LDI R24 , LOW ( 27 )
                 +__DELAY_USB_LOOP :
-00028d 958a     +DEC R24
-00028e f7f1     +BRNE __DELAY_USB_LOOP
+00028c 958a     +DEC R24
+00028d f7f1     +BRNE __DELAY_USB_LOOP
                  	__DELAY_USB 27
-00028f 9508      	RET
+00028e 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:6 WORDS
                  SUBOPT_0x5:
                 +
-000290 e18b     +LDI R24 , LOW ( 27 )
+00028f e18b     +LDI R24 , LOW ( 27 )
                 +__DELAY_USB_LOOP :
-000291 958a     +DEC R24
-000292 f7f1     +BRNE __DELAY_USB_LOOP
+000290 958a     +DEC R24
+000291 f7f1     +BRNE __DELAY_USB_LOOP
                  	__DELAY_USB 27
-000293 9508      	RET
+000292 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:7 WORDS
                  SUBOPT_0x6:
-000294 e0e7      	LDI  R30,LOW(7)
-000295 93ea      	ST   -Y,R30
-000296 e7ae      	LDI  R26,LOW(126)
-000297 cdf0      	RJMP _RF_Write
+000293 e0e7      	LDI  R30,LOW(7)
+000294 93ea      	ST   -Y,R30
+000295 e7ae      	LDI  R26,LOW(126)
+000296 cdf1      	RJMP _RF_Write
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x7:
-000298 e0e0      	LDI  R30,LOW(0)
-000299 93ea      	ST   -Y,R30
-00029a e1af      	LDI  R26,LOW(31)
-00029b cdec      	RJMP _RF_Write
+000297 e0e0      	LDI  R30,LOW(0)
+000298 93ea      	ST   -Y,R30
+000299 e1af      	LDI  R26,LOW(31)
+00029a cded      	RJMP _RF_Write
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:2 WORDS
                  SUBOPT_0x8:
-00029c 93ea      	ST   -Y,R30
-00029d e0a1      	LDI  R26,LOW(1)
-00029e cde9      	RJMP _RF_Write
+00029b 93ea      	ST   -Y,R30
+00029c e0a1      	LDI  R26,LOW(1)
+00029d cdea      	RJMP _RF_Write
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 10 TIMES, CODE SIZE REDUCTION:7 WORDS
                  SUBOPT_0x9:
-00029f 15e8      	CP   R30,R8
-0002a0 05f9      	CPC  R31,R9
-0002a1 9508      	RET
+00029e 15e8      	CP   R30,R8
+00029f 05f9      	CPC  R31,R9
+0002a0 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:7 WORDS
                  SUBOPT_0xA:
-0002a2 91e0 0176 	LDS  R30,_blueScores
-0002a4 91f0 0177 	LDS  R31,_blueScores+1
-0002a6 9508      	RET
+0002a1 91e0 0176 	LDS  R30,_blue_scores
+0002a3 91f0 0177 	LDS  R31,_blue_scores+1
+0002a5 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:10 WORDS
                  SUBOPT_0xB:
-0002a7 93e0 0176 	STS  _blueScores,R30
-0002a9 93f0 0177 	STS  _blueScores+1,R31
-0002ab 9508      	RET
+0002a6 93e0 0176 	STS  _blue_scores,R30
+0002a8 93f0 0177 	STS  _blue_scores+1,R31
+0002aa 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:7 WORDS
                  SUBOPT_0xC:
-0002ac 91e0 0174 	LDS  R30,_redScores
-0002ae 91f0 0175 	LDS  R31,_redScores+1
-0002b0 9508      	RET
+0002ab 91e0 0174 	LDS  R30,_red_scores
+0002ad 91f0 0175 	LDS  R31,_red_scores+1
+0002af 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:10 WORDS
                  SUBOPT_0xD:
-0002b1 93e0 0174 	STS  _redScores,R30
-0002b3 93f0 0175 	STS  _redScores+1,R31
-0002b5 9508      	RET
+0002b0 93e0 0174 	STS  _red_scores,R30
+0002b2 93f0 0175 	STS  _red_scores+1,R31
+0002b4 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
                  SUBOPT_0xE:
-0002b6 2dab      	MOV  R26,R11
-0002b7 e0b0      	LDI  R27,0
-0002b8 e6e4      	LDI  R30,LOW(100)
-0002b9 e0f0      	LDI  R31,HIGH(100)
-0002ba d08c      	RCALL __DIVW21
-0002bb 9508      	RET
+0002b5 2dab      	MOV  R26,R11
+0002b6 e0b0      	LDI  R27,0
+0002b7 e6e4      	LDI  R30,LOW(100)
+0002b8 e0f0      	LDI  R31,HIGH(100)
+0002b9 d08c      	RCALL __DIVW21
+0002ba 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 9 TIMES, CODE SIZE REDUCTION:22 WORDS
                  SUBOPT_0xF:
-0002bc 5ae0      	SUBI R30,LOW(-_number)
-0002bd 4ffe      	SBCI R31,HIGH(-_number)
-0002be 81e0      	LD   R30,Z
-0002bf bbe8      	OUT  0x18,R30
-0002c0 9508      	RET
+0002bb 5ae0      	SUBI R30,LOW(-_number)
+0002bc 4ffe      	SBCI R31,HIGH(-_number)
+0002bd 81e0      	LD   R30,Z
+0002be bbe8      	OUT  0x18,R30
+0002bf 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 9 TIMES, CODE SIZE REDUCTION:22 WORDS
                  SUBOPT_0x10:
-0002c1 59e6      	SUBI R30,LOW(-_numberA)
-0002c2 4ffe      	SBCI R31,HIGH(-_numberA)
-0002c3 81e0      	LD   R30,Z
-0002c4 30e0      	CPI  R30,0
-0002c5 9508      	RET
+0002c0 59e6      	SUBI R30,LOW(-_numberA)
+0002c1 4ffe      	SBCI R31,HIGH(-_numberA)
+0002c2 81e0      	LD   R30,Z
+0002c3 30e0      	CPI  R30,0
+0002c4 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 7 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x11:
-0002c6 9a96      	SBI  0x12,6
-0002c7 9a95      	SBI  0x12,5
-0002c8 9508      	RET
+0002c5 9a96      	SBI  0x12,6
+0002c6 9a95      	SBI  0x12,5
+0002c7 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:8 WORDS
                  SUBOPT_0x12:
-0002c9 9a94      	SBI  0x12,4
-0002ca 9ac6      	SBI  0x18,6
-0002cb 9ac7      	SBI  0x18,7
-0002cc 9a91      	SBI  0x12,1
-0002cd 9a92      	SBI  0x12,2
-0002ce 9a93      	SBI  0x12,3
-0002cf 9508      	RET
+0002c8 9a94      	SBI  0x12,4
+0002c9 9ac6      	SBI  0x18,6
+0002ca 9ac7      	SBI  0x18,7
+0002cb 9a91      	SBI  0x12,1
+0002cc 9a92      	SBI  0x12,2
+0002cd 9a93      	SBI  0x12,3
+0002ce 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:6 WORDS
                  SUBOPT_0x13:
-0002d0 2dab      	MOV  R26,R11
-0002d1 27bb      	CLR  R27
-0002d2 e6e4      	LDI  R30,LOW(100)
-0002d3 e0f0      	LDI  R31,HIGH(100)
-0002d4 d077      	RCALL __MODW21
-0002d5 01df      	MOVW R26,R30
-0002d6 e0ea      	LDI  R30,LOW(10)
-0002d7 e0f0      	LDI  R31,HIGH(10)
-0002d8 d06e      	RCALL __DIVW21
-0002d9 9508      	RET
+0002cf 2dab      	MOV  R26,R11
+0002d0 27bb      	CLR  R27
+0002d1 e6e4      	LDI  R30,LOW(100)
+0002d2 e0f0      	LDI  R31,HIGH(100)
+0002d3 d077      	RCALL __MODW21
+0002d4 01df      	MOVW R26,R30
+0002d5 e0ea      	LDI  R30,LOW(10)
+0002d6 e0f0      	LDI  R31,HIGH(10)
+0002d7 d06e      	RCALL __DIVW21
+0002d8 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
                  SUBOPT_0x14:
-0002da 2dab      	MOV  R26,R11
-0002db 27bb      	CLR  R27
-0002dc e0ea      	LDI  R30,LOW(10)
-0002dd e0f0      	LDI  R31,HIGH(10)
-0002de d06d      	RCALL __MODW21
-0002df 9508      	RET
+0002d9 2dab      	MOV  R26,R11
+0002da 27bb      	CLR  R27
+0002db e0ea      	LDI  R30,LOW(10)
+0002dc e0f0      	LDI  R31,HIGH(10)
+0002dd d06d      	RCALL __MODW21
+0002de 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x15:
-0002e0 91a0 0174 	LDS  R26,_redScores
-0002e2 91b0 0175 	LDS  R27,_redScores+1
-0002e4 e6e4      	LDI  R30,LOW(100)
-0002e5 e0f0      	LDI  R31,HIGH(100)
-0002e6 d060      	RCALL __DIVW21
-0002e7 9508      	RET
+0002df 91a0 0174 	LDS  R26,_red_scores
+0002e1 91b0 0175 	LDS  R27,_red_scores+1
+0002e3 e6e4      	LDI  R30,LOW(100)
+0002e4 e0f0      	LDI  R31,HIGH(100)
+0002e5 d060      	RCALL __DIVW21
+0002e6 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
                  SUBOPT_0x16:
-0002e8 9a97      	SBI  0x12,7
-0002e9 cfdc      	RJMP SUBOPT_0x11
+0002e7 9a97      	SBI  0x12,7
+0002e8 cfdc      	RJMP SUBOPT_0x11
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x17:
-0002ea 9ac6      	SBI  0x18,6
-0002eb 9ac7      	SBI  0x18,7
-0002ec 9508      	RET
+0002e9 9ac6      	SBI  0x18,6
+0002ea 9ac7      	SBI  0x18,7
+0002eb 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:2 WORDS
                  SUBOPT_0x18:
-0002ed 9a91      	SBI  0x12,1
-0002ee 9a92      	SBI  0x12,2
-0002ef 9a93      	SBI  0x12,3
-0002f0 9508      	RET
+0002ec 9a91      	SBI  0x12,1
+0002ed 9a92      	SBI  0x12,2
+0002ee 9a93      	SBI  0x12,3
+0002ef 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:8 WORDS
                  SUBOPT_0x19:
-0002f1 91a0 0174 	LDS  R26,_redScores
-0002f3 91b0 0175 	LDS  R27,_redScores+1
-0002f5 e6e4      	LDI  R30,LOW(100)
-0002f6 e0f0      	LDI  R31,HIGH(100)
-0002f7 d054      	RCALL __MODW21
-0002f8 01df      	MOVW R26,R30
-0002f9 e0ea      	LDI  R30,LOW(10)
-0002fa e0f0      	LDI  R31,HIGH(10)
-0002fb d04b      	RCALL __DIVW21
-0002fc 9508      	RET
+0002f0 91a0 0174 	LDS  R26,_red_scores
+0002f2 91b0 0175 	LDS  R27,_red_scores+1
+0002f4 e6e4      	LDI  R30,LOW(100)
+0002f5 e0f0      	LDI  R31,HIGH(100)
+0002f6 d054      	RCALL __MODW21
+0002f7 01df      	MOVW R26,R30
+0002f8 e0ea      	LDI  R30,LOW(10)
+0002f9 e0f0      	LDI  R31,HIGH(10)
+0002fa d04b      	RCALL __DIVW21
+0002fb 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x1A:
-0002fd 91a0 0174 	LDS  R26,_redScores
-0002ff 91b0 0175 	LDS  R27,_redScores+1
-000301 e0ea      	LDI  R30,LOW(10)
-000302 e0f0      	LDI  R31,HIGH(10)
-000303 d048      	RCALL __MODW21
-000304 9508      	RET
+0002fc 91a0 0174 	LDS  R26,_red_scores
+0002fe 91b0 0175 	LDS  R27,_red_scores+1
+000300 e0ea      	LDI  R30,LOW(10)
+000301 e0f0      	LDI  R31,HIGH(10)
+000302 d048      	RCALL __MODW21
+000303 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x1B:
-000305 91a0 0176 	LDS  R26,_blueScores
-000307 91b0 0177 	LDS  R27,_blueScores+1
-000309 e6e4      	LDI  R30,LOW(100)
-00030a e0f0      	LDI  R31,HIGH(100)
-00030b d03b      	RCALL __DIVW21
-00030c 9508      	RET
+000304 91a0 0176 	LDS  R26,_blue_scores
+000306 91b0 0177 	LDS  R27,_blue_scores+1
+000308 e6e4      	LDI  R30,LOW(100)
+000309 e0f0      	LDI  R31,HIGH(100)
+00030a d03b      	RCALL __DIVW21
+00030b 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:8 WORDS
                  SUBOPT_0x1C:
-00030d 91a0 0176 	LDS  R26,_blueScores
-00030f 91b0 0177 	LDS  R27,_blueScores+1
-000311 e6e4      	LDI  R30,LOW(100)
-000312 e0f0      	LDI  R31,HIGH(100)
-000313 d038      	RCALL __MODW21
-000314 01df      	MOVW R26,R30
-000315 e0ea      	LDI  R30,LOW(10)
-000316 e0f0      	LDI  R31,HIGH(10)
-000317 d02f      	RCALL __DIVW21
-000318 9508      	RET
+00030c 91a0 0176 	LDS  R26,_blue_scores
+00030e 91b0 0177 	LDS  R27,_blue_scores+1
+000310 e6e4      	LDI  R30,LOW(100)
+000311 e0f0      	LDI  R31,HIGH(100)
+000312 d038      	RCALL __MODW21
+000313 01df      	MOVW R26,R30
+000314 e0ea      	LDI  R30,LOW(10)
+000315 e0f0      	LDI  R31,HIGH(10)
+000316 d02f      	RCALL __DIVW21
+000317 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x1D:
-000319 91a0 0176 	LDS  R26,_blueScores
-00031b 91b0 0177 	LDS  R27,_blueScores+1
-00031d e0ea      	LDI  R30,LOW(10)
-00031e e0f0      	LDI  R31,HIGH(10)
-00031f d02c      	RCALL __MODW21
-000320 9508      	RET
+000318 91a0 0176 	LDS  R26,_blue_scores
+00031a 91b0 0177 	LDS  R27,_blue_scores+1
+00031c e0ea      	LDI  R30,LOW(10)
+00031d e0f0      	LDI  R31,HIGH(10)
+00031e d02c      	RCALL __MODW21
+00031f 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x1E:
-000321 e0e1      	LDI  R30,LOW(1)
-000322 bfe9      	OUT  0x39,R30
-000323 eee7      	LDI  R30,LOW(999)
-000324 e0f3      	LDI  R31,HIGH(999)
-000325 9508      	RET
+000320 e0e1      	LDI  R30,LOW(1)
+000321 bfe9      	OUT  0x39,R30
+000322 eee7      	LDI  R30,LOW(999)
+000323 e0f3      	LDI  R31,HIGH(999)
+000324 9508      	RET
                  
                  
                  	.CSEG
                  _delay_ms:
-000326 9610      	adiw r26,0
-000327 f039      	breq __delay_ms1
+000325 9610      	adiw r26,0
+000326 f039      	breq __delay_ms1
                  __delay_ms0:
                 +
-000328 ed80     +LDI R24 , LOW ( 0x7D0 )
-000329 e097     +LDI R25 , HIGH ( 0x7D0 )
+000327 ed80     +LDI R24 , LOW ( 0x7D0 )
+000328 e097     +LDI R25 , HIGH ( 0x7D0 )
                 +__DELAY_USW_LOOP :
-00032a 9701     +SBIW R24 , 1
-00032b f7f1     +BRNE __DELAY_USW_LOOP
+000329 9701     +SBIW R24 , 1
+00032a f7f1     +BRNE __DELAY_USW_LOOP
                  	__DELAY_USW 0x7D0
-00032c 95a8      	wdr
-00032d 9711      	sbiw r26,1
-00032e f7c9      	brne __delay_ms0
+00032b 95a8      	wdr
+00032c 9711      	sbiw r26,1
+00032d f7c9      	brne __delay_ms0
                  __delay_ms1:
-00032f 9508      	ret
+00032e 9508      	ret
                  
                  __ANEGW1:
-000330 95f1      	NEG  R31
-000331 95e1      	NEG  R30
-000332 40f0      	SBCI R31,0
-000333 9508      	RET
+00032f 95f1      	NEG  R31
+000330 95e1      	NEG  R30
+000331 40f0      	SBCI R31,0
+000332 9508      	RET
                  
                  __DIVW21U:
-000334 2400      	CLR  R0
-000335 2411      	CLR  R1
-000336 e190      	LDI  R25,16
+000333 2400      	CLR  R0
+000334 2411      	CLR  R1
+000335 e190      	LDI  R25,16
                  __DIVW21U1:
-000337 0faa      	LSL  R26
-000338 1fbb      	ROL  R27
-000339 1c00      	ROL  R0
-00033a 1c11      	ROL  R1
-00033b 1a0e      	SUB  R0,R30
-00033c 0a1f      	SBC  R1,R31
-00033d f418      	BRCC __DIVW21U2
-00033e 0e0e      	ADD  R0,R30
-00033f 1e1f      	ADC  R1,R31
-000340 c001      	RJMP __DIVW21U3
+000336 0faa      	LSL  R26
+000337 1fbb      	ROL  R27
+000338 1c00      	ROL  R0
+000339 1c11      	ROL  R1
+00033a 1a0e      	SUB  R0,R30
+00033b 0a1f      	SBC  R1,R31
+00033c f418      	BRCC __DIVW21U2
+00033d 0e0e      	ADD  R0,R30
+00033e 1e1f      	ADC  R1,R31
+00033f c001      	RJMP __DIVW21U3
                  __DIVW21U2:
-000341 60a1      	SBR  R26,1
+000340 60a1      	SBR  R26,1
                  __DIVW21U3:
-000342 959a      	DEC  R25
-000343 f799      	BRNE __DIVW21U1
-000344 01fd      	MOVW R30,R26
-000345 01d0      	MOVW R26,R0
-000346 9508      	RET
+000341 959a      	DEC  R25
+000342 f799      	BRNE __DIVW21U1
+000343 01fd      	MOVW R30,R26
+000344 01d0      	MOVW R26,R0
+000345 9508      	RET
                  
                  __DIVW21:
-000347 d012      	RCALL __CHKSIGNW
-000348 dfeb      	RCALL __DIVW21U
-000349 f40e      	BRTC __DIVW211
-00034a dfe5      	RCALL __ANEGW1
+000346 d012      	RCALL __CHKSIGNW
+000347 dfeb      	RCALL __DIVW21U
+000348 f40e      	BRTC __DIVW211
+000349 dfe5      	RCALL __ANEGW1
                  __DIVW211:
-00034b 9508      	RET
+00034a 9508      	RET
                  
                  __MODW21:
-00034c 94e8      	CLT
-00034d ffb7      	SBRS R27,7
-00034e c004      	RJMP __MODW211
-00034f 95a0      	COM  R26
-000350 95b0      	COM  R27
-000351 9611      	ADIW R26,1
-000352 9468      	SET
+00034b 94e8      	CLT
+00034c ffb7      	SBRS R27,7
+00034d c004      	RJMP __MODW211
+00034e 95a0      	COM  R26
+00034f 95b0      	COM  R27
+000350 9611      	ADIW R26,1
+000351 9468      	SET
                  __MODW211:
-000353 fdf7      	SBRC R31,7
-000354 dfdb      	RCALL __ANEGW1
-000355 dfde      	RCALL __DIVW21U
-000356 01fd      	MOVW R30,R26
-000357 f40e      	BRTC __MODW212
-000358 dfd7      	RCALL __ANEGW1
+000352 fdf7      	SBRC R31,7
+000353 dfdb      	RCALL __ANEGW1
+000354 dfde      	RCALL __DIVW21U
+000355 01fd      	MOVW R30,R26
+000356 f40e      	BRTC __MODW212
+000357 dfd7      	RCALL __ANEGW1
                  __MODW212:
-000359 9508      	RET
+000358 9508      	RET
                  
                  __CHKSIGNW:
-00035a 94e8      	CLT
-00035b fff7      	SBRS R31,7
-00035c c002      	RJMP __CHKSW1
-00035d dfd2      	RCALL __ANEGW1
-00035e 9468      	SET
+000359 94e8      	CLT
+00035a fff7      	SBRS R31,7
+00035b c002      	RJMP __CHKSW1
+00035c dfd2      	RCALL __ANEGW1
+00035d 9468      	SET
                  __CHKSW1:
-00035f ffb7      	SBRS R27,7
-000360 c006      	RJMP __CHKSW2
-000361 95a0      	COM  R26
-000362 95b0      	COM  R27
-000363 9611      	ADIW R26,1
-000364 f800      	BLD  R0,0
-000365 9403      	INC  R0
-000366 fa00      	BST  R0,0
+00035e ffb7      	SBRS R27,7
+00035f c006      	RJMP __CHKSW2
+000360 95a0      	COM  R26
+000361 95b0      	COM  R27
+000362 9611      	ADIW R26,1
+000363 f800      	BLD  R0,0
+000364 9403      	INC  R0
+000365 fa00      	BST  R0,0
                  __CHKSW2:
-000367 9508      	RET
+000366 9508      	RET
                  
                  __SAVELOCR2:
-000368 931a      	ST   -Y,R17
-000369 930a      	ST   -Y,R16
-00036a 9508      	RET
+000367 931a      	ST   -Y,R17
+000368 930a      	ST   -Y,R16
+000369 9508      	RET
                  
                  ;END OF CODE MARKER
                  __END_OF_CODE:
@@ -2875,7 +2873,7 @@ fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 in    :   2
 inc   :   2 ld    :  29 ldd   :   7 ldi   : 141 lds   :  19 lpm   :   7 
 lsl   :   3 lsr   :   0 mov   :  12 movw  :   9 mul   :   0 muls  :   0 
 mulsu :   0 neg   :   2 nop   :   0 or    :   7 ori   :   2 out   :  28 
-pop   :   0 push  :   0 rcall : 166 ret   :  43 reti  :   2 rjmp  :  68 
+pop   :   0 push  :   0 rcall : 165 ret   :  43 reti  :   2 rjmp  :  68 
 rol   :   3 ror   :   0 sbc   :   1 sbci  :   3 sbi   :  49 sbic  :   2 
 sbis  :   0 sbiw  :   7 sbr   :   1 sbrc  :   1 sbrs  :   3 sec   :   0 
 seh   :   0 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   2 
@@ -2887,7 +2885,7 @@ Instructions used: 56 out of 114 (49.1%)
 ATmega8A memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0006d6   1692     58   1750    8192  21.4%
+[.cseg] 0x000000 0x0006d4   1690     58   1748    8192  21.3%
 [.dseg] 0x000060 0x00017b      0     27     27    1024   2.6%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 

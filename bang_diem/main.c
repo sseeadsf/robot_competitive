@@ -273,8 +273,7 @@ delay_us(10);
 RX_Mode();
 
 
-while (1){    
-    RX_Config(); 
+while (1){  
     if(IRQ == 0){
         RX_Read();           
         if(score == 9)
@@ -298,7 +297,7 @@ while (1){
             blue_scores = 999;
             stop_game();
         }
-    }   
-    RX_Config();    
+		RX_Config();
+	}
 }
 }
