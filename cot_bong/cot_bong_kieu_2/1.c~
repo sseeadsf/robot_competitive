@@ -1,0 +1,111 @@
+
+
+#include <io.h>
+#include <delay.h>
+#include <stdbool.h>
+
+#define CE      PORTC.0
+#define SCK     PORTC.2
+#define MISO    PINC.4
+#define CSN     PORTC.1
+#define MOSI    PORTC.3
+#define IRQ     PINC.5
+
+char Send_Add = 0xB1, Receive_Add = 0xB1, Salt_Add = 0xAB; 
+int score;
+int dem, rc;
+int second = 150, milisecond = 100;
+#include "rf.c"
+
+#define tiem_can PIND.3
+#define servo PORTD.2
+
+
+void reset(){
+    WDTCR=0x18;
+    WDTCR=0x08;   
+    while(1);    
+}
+
+interrupt [TIM0_OVF] void timer0_interrput(){
+    TCNT0 = 0x9C;
+    dem++;
+    if(dem == 200)
+        dem = 0;
+    if(dem<rc)
+        servo = 1;
+    else 
+        servo = 0;
+}
+
+interrupt [TIM2_OVF] void timer2_interrupt(){
+    TCNT2 = 0xB2;   
+    milisecond--;
+
+    if(milisecond == 0){
+        second--;
+        milisecond = 100;         
+    }
+    if(second == 0){
+        reset();    
+    }  
+}
+
+void main(){
+    DDRC = 0b00001110;
+    PORTC = 0b00111111;
+    
+    DDRD = 0x04;
+    PORTD = 0x08;        
+    
+    TCCR0=(0<<CS02) | (1<<CS01) | (0<<CS00);
+    TCNT0=0x9C;      
+    
+    ASSR=0<<AS2;
+    TCCR2=(0<<PWM2) | (0<<COM21) | (0<<COM20) | (0<<CTC2) | (1<<CS22) | (1<<CS21) | (1<<CS20);
+    TCNT2=0xB2;
+    OCR2=0x00;
+    
+
+    TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
+                
+    Common_Config();
+    delay_us(10);
+    Common_Init();  
+    delay_us(10);
+    RX_Config();  
+    delay_us(10);
+    RX_Mode();
+    
+    #asm("sei")
+    #asm("wdr") 
+    
+    rc = 8;   
+    delay_ms(10);
+
+    while(1){
+        RX_Config();
+        if(IRQ == 0){
+            RX_Read();
+            if(score == 7){
+                TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
+                Common_Init();
+                delay_us(10);
+                TX_Config();
+                delay_us(10);
+                TX_Mode();  
+                score = 8;
+                delay_ms(200);
+                while(1){ 
+                    rc = 17;
+                    if(tiem_can == 1){
+                        rc = 8;
+                        TX_Send();
+                        delay_ms(200);
+                        while(tiem_can == 1);
+                    }
+                }
+            }    
+        }
+    }
+}          

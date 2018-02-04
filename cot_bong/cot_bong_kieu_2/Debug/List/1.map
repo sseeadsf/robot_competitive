@@ -1,0 +1,41 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+second                                                                            0x0160       2
+milisecond                                                                        0x0162       2
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+Send_Add                                                                          R5           1
+Receive_Add                                                                       R4           1
+Salt_Add                                                                          R7           1
+score                                                                             R8,R9        2
+dem                                                                               R10,R11      2
+rc                                                                                R12,R13      2
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+SPI_Write                                                                         0x0004D     24
+SPI_Read                                                                          0x00065     16
+RF_Command                                                                        0x00075      4
+RF_Write_Add                                                                      0x0007E     15
+TX_Address                                                                        0x0008D      5
+RX_Address                                                                        0x00092      9
+Common_Config                                                                     0x0009B     34
+Common_Init                                                                       0x000BD      8
+TX_Mode                                                                           0x000C5      6
+RX_Mode                                                                           0x000CB      6
+TX_Config                                                                         0x000D1      6
+RX_Config                                                                         0x000D7      6
+TX_Send                                                                           0x000DD     24
+RX_Read                                                                           0x000F5     15
+reset                                                                             0x00104      5
+timer0_interrput                                                                  0x00109     27
+timer2_interrupt                                                                  0x00124     54
+main                                                                              0x0015A     73

@@ -1,0 +1,48 @@
+
+#include <mega8.h>
+#include <io.h>
+#include <delay.h>
+
+#define CE      PORTD.2
+#define SCK     PORTD.3
+#define MISO    PIND.4
+#define CSN     PORTD.7
+#define MOSI    PORTD.6
+#define IRQ     PIND.5
+#define Led PORTC.5
+char Send_Add = 0xB1, Receive_Add = 0xB1, Salt_Add = 0xAB;  
+int score;
+#include "rf.c"
+
+#define reset PIND.1
+#define start PINB.7
+
+
+void main(){
+    DDRD = 0b11001100;
+    PORTD = 0b11111111;
+    DDRB=0x00;
+    PORTB=0xFF; 
+        
+    Common_Config();
+    delay_us(10);
+    Common_Init();
+    delay_us(10); 
+    TX_Config();
+    delay_us(10);
+    TX_Mode();  
+    
+    #asm("sei")
+    
+while (1){
+    if(reset == 0){
+        score = 10;
+        TX_Send();
+    }                             
+    if(start == 0){
+        score = 9;
+        TX_Send();
+    }
+}
+}
+

@@ -1,0 +1,204 @@
+#define CONFIG      	0x00
+#define EN_AA       	0x01
+#define EN_RXADDR   	0x02
+#define SETUP_AW    	0x03
+#define SETUP_RETR  	0x04
+#define RF_CH       	0x05
+#define RF_SETUP    	0x06
+#define STATUS  		0x07
+#define OBSERVE_TX  	0x08
+#define RPD          	0x09
+#define RX_ADDR_P0  	0x0A
+#define RX_ADDR_P1  	0x0B
+#define RX_ADDR_P2  	0x0C
+#define RX_ADDR_P3  	0x0D
+#define RX_ADDR_P4  	0x0E
+#define RX_ADDR_P5  	0x0F
+#define TX_ADDR     	0x10
+#define RX_PW_P0    	0x11
+#define RX_PW_P1    	0x12
+#define RX_PW_P2    	0x13
+#define RX_PW_P3    	0x14
+#define RX_PW_P4    	0x15
+#define RX_PW_P5    	0x16
+#define FIFO_STATUS 	0x17
+#define DYNPD	    	0x1C
+#define FEATURE	    	0x1D
+
+void SPI_Write(unsigned char Buff){
+    unsigned char bit_ctr;
+    for(bit_ctr=0;bit_ctr<8;bit_ctr++){
+        MOSI = (Buff & 0x80);         
+        delay_us(5);
+        Buff = (Buff << 1);           
+        SCK = 1;                      
+        delay_us(5);
+        Buff |= MISO;           
+        SCK = 0;
+    }
+}
+
+unsigned char SPI_Read(void){
+    unsigned char Buff=0;
+    unsigned char bit_ctr;
+    for(bit_ctr=0;bit_ctr<8;bit_ctr++){
+        delay_us(5);
+        Buff = (Buff << 1);        
+        SCK = 1;                            
+        delay_us(5);
+        Buff |= MISO;             
+        SCK = 0;               
+    }
+    return(Buff);                 
+}
+
+
+void RF_Command(unsigned char command){
+    CSN=0;
+    SPI_Write(command);
+    CSN=1;
+    delay_us(10);
+}
+
+
+void RF_Write(unsigned char Reg_Add, unsigned char Value){
+    CSN=0;
+    SPI_Write(0b00100000|Reg_Add);
+    SPI_Write(Value);
+    CSN=1;
+    delay_us(10);
+}
+
+void RF_Write_Add(unsigned char Reg_Add, unsigned char Value)         //Function to write a value to a register address
+{
+    CSN=0;
+    SPI_Write(0b00100000|Reg_Add);
+    SPI_Write(Salt_Add);
+    SPI_Write(Value);
+    SPI_Write(Value);
+    SPI_Write(Value);
+    SPI_Write(Value);
+    CSN=1;
+    delay_us(10);
+}
+
+void TX_Address(unsigned char Address){
+    CSN=0;
+    RF_Write(SETUP_AW,0b00000011);
+    CSN=1;
+    delay_us(10);
+    CSN=0;       
+    //RF_Write_Add(RX_ADDR_P0, Address);
+    RF_Write_Add(TX_ADDR, Address);  
+}
+
+void RX_Address(unsigned char Address){
+    CSN=0;
+    RF_Write(SETUP_AW,0b00000011);
+    CSN=1;
+    delay_us(10);
+    CSN=0;       
+    RF_Write_Add(RX_ADDR_P0, Address);
+    //RF_Write_Add(RX_PW_P0, Address);  
+}
+
+
+void Common_Config(){
+    CE=0; 
+    CSN=1;
+    SCK=0; 
+    delay_us(10);
+    RF_Write(STATUS,0b01111110);
+    RF_Command(0b11100010); 
+    RF_Write(CONFIG,0b00011111);
+    delay_ms(2);
+    RF_Write(STATUS,0b01111110); 
+    RF_Write(FEATURE, 0b00000100);
+    RF_Write(RF_CH,0b00000010); 
+    RF_Write(RF_SETUP, 0b00000110);  
+    RF_Write(DYNPD,0b00000001);    
+    RF_Write(EN_RXADDR,0b00000001);
+}
+
+void Common_Init(){ 
+    CE=1;
+    delay_us(700);
+    CE=0;
+    CSN=1;
+}
+
+
+void TX_Mode(){
+    CE=0;
+    RF_Write(CONFIG,0b00011110);
+}
+
+void RX_Mode(){
+    RF_Write(CONFIG,0b00011111);
+    CE=1;
+}
+
+void TX_Config(){
+    RF_Write(STATUS,0b01111110); 
+    RF_Command(0b11100010); 
+    TX_Address(Send_Add);   
+}
+
+void RX_Config(){
+    RF_Write(STATUS,0b01111110);
+    RF_Command(0b11100010);
+    RX_Address(Receive_Add);  
+}
+ void clear(){
+  CSN=0;//nghe lenh
+    delay_us(10);
+	RF_Write(STATUS,0x70);
+    RF_Write(CONFIG,0b00011110);
+   // RF_Command(0b11100010);
+	delay_us(10); 
+        RF_Write(CONFIG,0b00011110);
+
+    CSN=1;
+    delay_ms(10);
+    }
+    
+void TX_Send(int diem){
+    TX_Address(Send_Add);
+    CSN=1;
+    delay_us(10);
+    CSN=0;
+    SPI_Write(0b11100001);
+    CSN=1;
+    delay_us(10);
+    CSN=0;
+    SPI_Write(0b10100000);
+    SPI_Write(diem);
+    CSN=1;
+    CE=1;
+    delay_us(500);
+    CE=0;
+    RF_Write(0x07,0b01111110);
+    TX_Address(Send_Add);
+    RF_Command(0b11100001);  
+}
+
+void RX_Read(int score){
+    CE=0;
+    CSN=1;
+    delay_us(10);
+    CSN=0;
+    SPI_Write(0b01100001);
+    delay_us(10);              
+    score = SPI_Read(); 
+    CSN=1;
+    CE=1;
+    RF_Write(STATUS,0b01111110);
+    RF_Command(0b11100010);
+}
+
+void TX_Send_(int so_lan, int score){
+    int i;
+    for(i=0;i<so_lan;i++){
+        TX_Send(score);
+    }
+}

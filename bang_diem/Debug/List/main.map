@@ -1,0 +1,48 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+number                                                                            0x0160      10
+numberG                                                                           0x016A      10
+red_scores                                                                        0x0174       2
+blue_scores                                                                       0x0176       2
+time_out                                                                          0x0178       1
+a                                                                                 0x0179       2
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+Send_Add                                                                          R5           1
+Receive_Add                                                                       R4           1
+Salt_Add                                                                          R7           1
+score                                                                             R8,R9        2
+milisecond                                                                        R6           1
+second                                                                            R11          1
+led                                                                               R10          1
+red_score                                                                         R13          1
+blue_score                                                                        R12          1
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+SPI_Write                                                                         0x0005C     24
+SPI_Read                                                                          0x00074     16
+RF_Command                                                                        0x00084      4
+RF_Write_Add                                                                      0x0008D     15
+RX_Address                                                                        0x0009C     12
+Common_Config                                                                     0x000A8     29
+Common_Init                                                                       0x000C5      8
+RX_Mode                                                                           0x000CD      3
+RX_Config                                                                         0x000D0      6
+RX_Read                                                                           0x000D6     15
+check_finish                                                                      0x000E5      9
+get_score                                                                         0x000EE     77
+stop_game                                                                         0x0013B      5
+start_game                                                                        0x00140      6
+reset_game                                                                        0x00146      5
+timer0_ovf_isr                                                                    0x0014B    169
+timer2_interrupt                                                                  0x001F4     56
+main                                                                              0x0022C     74
